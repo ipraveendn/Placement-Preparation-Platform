@@ -1,5 +1,7 @@
 import React from "react";
 import "./Navbar.css";
+import { Link } from "react-router-dom";
+
 const Navbar = () => {
   return (
     <>
@@ -27,9 +29,9 @@ const Navbar = () => {
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link mock" href="#">
-                  Mock Interviews
-                </a>
+                <div class="nav-link mock">
+                  <Link to="/Mock">Mock Interviews</Link>
+                </div>
               </li>
               <li class="nav-item">
                 <a class="nav-link questions" href="#">
