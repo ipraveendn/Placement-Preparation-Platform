@@ -13,10 +13,10 @@ const Herosec = () => {
         Complete placement preparation with mock interviews, company-specific
         questions, skill practice and resume building tools.
       </p>
-      <buttons className="buttons-hero-sec">
+      <div className="buttons-hero-sec">
         <button className="get-started">Get Started</button>
         <button className="learn-more">Learn More</button>
-      </buttons>
+      </div>
     </div>
     </div>
     <div className="landing-page">
