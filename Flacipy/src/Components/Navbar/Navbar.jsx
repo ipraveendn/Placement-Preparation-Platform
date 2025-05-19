@@ -1,5 +1,7 @@
 import React from "react";
 import "./Navbar.css";
+import { Link } from "react-router-dom";
+
 const Navbar = () => {
   return (
     <>
@@ -22,34 +24,29 @@ const Navbar = () => {
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-elem">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">
-                  Home
-                </a>
+                <div class="nav-link active">
+                  <Link to="/">Home</Link>
+                </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link mock" href="#">
-                  Mock Interviews
-                </a>
+                <div class="nav-link mock">
+                  <Link to="/Mock">Mock Interviews</Link>
+                </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link questions" href="#">
-                  Interview Questions
-                </a>
+                <div class="nav-link questions">
+                  <Link to="/">Interview Questions</Link>
+                </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link practise" href="#">
-                  Practise
-                </a>
+                <div class="nav-link practise">
+                  <Link to="/">Practise</Link>
+                </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link resume-builder" href="#">
-                  Resume Builder
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link jobs" href="#">
-                  Jobs
-                </a>
+                <div class="nav-link resume">
+                  <Link to="/">Resume Builder</Link>
+                </div>
               </li>
               <button type="button" class="btn btn-primary signIn">Sign In</button>
               {/* <li class="nav-item dropdown">
