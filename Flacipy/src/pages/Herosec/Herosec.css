@@ -3,7 +3,6 @@
     align-items: center;
     justify-content: center;
     margin-top: 40px;
-    
 }
 .hero-sec{
     height: 100%;
@@ -109,9 +108,12 @@
   font-size: 0.9rem;
   margin-top: auto;
 }
+<<<<<<< HEAD
 
 .card-link:hover {
   text-decoration: underline;
   cursor: pointer;
   color: #6b46c1;
 }
+=======
+>>>>>>> a68a833487f835e45ea84b87399a1d6571eb9995
