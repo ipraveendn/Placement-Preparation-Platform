@@ -1,10 +1,9 @@
 import React from 'react'
 import people from '../assets/people.svg'
-import ai from '../assets/monitor.svg'
 import check from '../assets/check.svg'
-import light from '../assets/light.svg'
-import video from '../assets/video.svg'
-import Hrform from '../Components/Navbar/hrform'
+import ai from '../assets/monitor.svg'
+import Hrform from '../Components/hrform'
+import Aiform from '../Components/aiform'
 
 const report = [{
     date: "May 20, 2025",
@@ -89,7 +88,7 @@ const Mock = () => {
                 <div className={classes.checkcont}><img src={check} className={classes.check}></img><span className={classes.intro3}>Instant feedback</span></div>
                 <div className={classes.checkcont}><img src={check} className={classes.check}></img><span className={classes.intro3}>Multiple interview types</span></div>
               </div>
-              <div className={classes.button2}><img src={light} className={classes.img2}></img><span>Start AI Interview Now</span></div>
+              <div><Aiform/></div>
             </div>
           </div>
           <div className={classes.container3}>
