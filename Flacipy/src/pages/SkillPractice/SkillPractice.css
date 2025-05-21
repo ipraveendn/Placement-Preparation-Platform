@@ -1,0 +1,277 @@
+.practice-header {
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  font-family: 'Arial', sans-serif;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.header-icon {
+  font-size: 1.8rem;
+  color: #4f46e5;
+  margin-right: 8px;
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1f2937;
+}
+
+.nav-links a {
+  margin-left: 24px;
+  text-decoration: none;
+  color: #1f2937;
+  font-size: 1rem;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #6a11cb;
+}
+
+.nav-links a.active {
+  color: #6a11cb;
+  font-weight: bold;
+}
+
+.skill-hero {
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  color: white;
+  text-align: center;
+  padding: 40px 20px 60px; 
+  font-family: 'Arial', sans-serif;
+}
+
+.skill-hero h1 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.skill-hero p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.skill-hero.small {
+  padding: 45px 20px;
+}
+
+.progress-container {
+  background-color: #f8f9fa;
+  padding: 20px 20px;
+  border-radius: 12px;
+  margin: 30px auto;
+  width: 90%;
+  max-width: 1000px;
+}
+
+.progress-header {
+  text-align: left;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.progress-header h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.progress-header .level-tag {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: #e0e7ff;
+  color: #4f46e5;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+}
+
+.progress-cards {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.progress-card {
+  flex: 1;
+  min-width: 280px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.progress-bar { 
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #6366f1;
+  transition: width 0.3s ease;
+}
+
+.practice-tabs {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  gap: 30px;
+}
+
+.practice-tabs button {
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #4b5563;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.practice-tabs button.active {
+  color: #6a11cb;
+  border-color: #6a11cb;
+  font-weight: bold;
+}
+
+.practice-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 30px;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.practice-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 10px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.platform-logo {
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 10px 12px;
+  border-radius: 8px;
+}
+
+.card-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.solved-count {
+  font-weight: bold;
+}
+
+.practice-bar {
+  background-color: #e5e7eb;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.practice-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.continue-practice {
+  padding: 10px;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.development-placeholder {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.1rem;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.recommended-section {
+  margin-top: 40px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.recommended-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.recommended-table th,
+.recommended-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.difficulty {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.difficulty.easy {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.difficulty.medium {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.difficulty.hard {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.solve-link {
+  color: #6d28d9;
+  font-weight: 600;
+  text-decoration: none;
+}
