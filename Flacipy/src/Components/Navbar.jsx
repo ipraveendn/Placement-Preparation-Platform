@@ -1,92 +1,27 @@
-import React from "react";
-import "./Navbar.css";
-import { Link } from "react-router-dom";
+import React from 'react'
+import { Link } from 'react-router-dom';
+
+const classes = {
+    container0: "bg-gray-900 text-white flex justify-center items-center shadow-xl sticky top-0 z-50",
+    container: "flex justify-between items-center w-[85%] py-[20px]",
+    logo: "text-3xl font-bold",
+    link: "text-white text-[18px] font-semibold",
+    linkcontainer: "flex items-center gap-4 justify-center",
+    span: "hover:text-violet-500",
+};
 
 const Navbar = () => {
   return (
-    <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
-        <div className="container-fluid">
-          <a className="navbar-brand" href="#">
-            Flacipy
-          </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0 nav-elem">
-              <li className="nav-item">
-                <div className="nav-link active">
-                  <Link to="/">Home</Link>
-                </div>
-              </li>
-              <li className="nav-item">
-                <div className="nav-link mock">
-                  <Link to="/Mock">Mock Interviews</Link>
-                </div>
-              </li>
-              <li className="nav-item">
-                <div className="nav-link questions">
-                  <Link to="/">Interview Questions</Link>
-                </div>
-              </li>
-              <li className="nav-item">
-                <div className="nav-link practise">
-                  <Link to="/">Practise</Link>
-                </div>
-              </li>
-              <li className="nav-item">
-                <div className="nav-link resume">
-                  <Link to="/">Resume Builder</Link>
-                </div>
-              </li>
-              <button type="button" className="btn btn-primary signIn">Sign In</button>
-              {/* <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Dropdown
-                </a>
-                <ul className="dropdown-menu">
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Action
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Another action
-                    </a>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Something else here
-                    </a>
-                  </li>
-                </ul>
-              </li> */}
-            </ul>
-            
-          </div>
+    <div className={classes.container0}>
+    <div className={classes.container}>
+        <div className={classes.logo}>FLACIPY</div>
+        <div className={classes.linkcontainer}>
+            <Link to="/Herosec" id='link' className={classes.link}><span className={classes.span}>Home</span></Link>
+            <Link to="/Mock" id='link' className={classes.link}><span className={classes.span}>Mock Interview</span></Link>
         </div>
-      </nav>
-    </>
-  );
-};
+    </div>
+    </div>
+  )
+}
 
 export default Navbar;

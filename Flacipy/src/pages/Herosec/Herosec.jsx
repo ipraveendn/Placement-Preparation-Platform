@@ -2,6 +2,7 @@ import React from "react";
 import "./Herosec.css";
 import { FiMessageCircle, FiHelpCircle, FiFileText } from "react-icons/fi";
 import { HiOutlineLightBulb } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
 const Herosec = () => {
   return (
@@ -27,7 +28,7 @@ const Herosec = () => {
                 <div className="icon-circle"><FiMessageCircle size={20} /></div>
                 <h3>Mock Interviews</h3>
                 <p>Practice with HR professionals and connect with placed students from your network.</p>
-                <a href="#" className="card-link">Try Now &gt;</a>
+                <Link to="/Mock" className="card-link">Try Now &gt;</Link>
               </div>
               <div className="feature-card">
                 <div className="icon-circle"><FiHelpCircle size={20} /></div>
