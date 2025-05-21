@@ -16,8 +16,8 @@ function App() {
     <Router>
       <Navbar/>
       <Routes>
-        <Route path="/Mock" element={<Herosec/>} />
-        <Route path="/" element={<Mock/>} />
+        <Route path="/" element={<Herosec/>} />
+        <Route path="/Mock" element={<Mock/>} />
       </Routes>
     </Router>
     </>
