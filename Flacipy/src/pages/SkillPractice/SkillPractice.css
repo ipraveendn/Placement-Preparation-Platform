@@ -50,6 +50,11 @@
   text-align: center;
   padding: 40px 20px 60px; 
   font-family: 'Arial', sans-serif;
+  width: 85%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 18px;
+  margin-top: 35px;
 }
 
 .skill-hero h1 {

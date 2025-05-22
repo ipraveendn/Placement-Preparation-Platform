@@ -78,18 +78,6 @@ const SkillPractice = () => {
 
   return (
     <div>
-      <header className="practice-header">
-        <div className="header-left">
-          <HiOutlineLightBulb className="header-icon" />
-          <span className="logo-text">InterviewPrep</span>
-        </div>
-        <nav className="nav-links">
-          <Link to="/questions">Questions</Link>
-          <Link to="/skill-practice" className="active">Practice</Link>
-          <Link to="/resources">Resources</Link>
-          <Link to="/about">About</Link>
-        </nav>
-      </header>
 
       <div className="skill-hero small">
         <h1>Practice Makes Perfect</h1>

@@ -17,11 +17,11 @@ const Layout = () => {
 
   return (
     <>
-      {isHome && <Navbar />}
+      <Navbar />
       <Routes>
-        <Route path="/" element={<Herosec />} />
+        <Route path="/Herosec" element={<Herosec />} />
         <Route path="/Mock" element={<Mock />} />
-        <Route path="/skill-practice" element={<SkillPractice />} />
+        <Route path="/Skill" element={<SkillPractice />} />
       </Routes>
     </>
   );
