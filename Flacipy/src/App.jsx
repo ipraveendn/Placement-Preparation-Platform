@@ -19,7 +19,7 @@ const Layout = () => {
     <>
       <Navbar />
       <Routes>
-        <Route path="/Herosec" element={<Herosec />} />
+        <Route path="/" element={<Herosec />} />
         <Route path="/Mock" element={<Mock />} />
         <Route path="/Skill" element={<SkillPractice />} />
       </Routes>
