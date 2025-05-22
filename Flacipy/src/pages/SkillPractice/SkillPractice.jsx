@@ -76,9 +76,46 @@ const SkillPractice = () => {
     },
   ];
 
+  const studyPlan = [
+    {
+      day: "Monday",
+      topic: "Arrays & Strings",
+      resource: "3 LeetCode Problems",
+      link: "https://leetcode.com",
+      status: "Completed",
+    },
+    {
+      day: "Tuesday",
+      topic: "React Components",
+      resource: "Frontend Mentor Challenge",
+      link: "https://frontendmentor.io",
+      status: "Completed",
+    },
+    {
+      day: "Wednesday",
+      topic: "Linked Lists",
+      resource: "2 HackerRank Problems",
+      link: "https://hackerrank.com",
+      status: "In Progress",
+    },
+    {
+      day: "Thursday",
+      topic: "API Integration",
+      resource: "Weather App Project",
+      link: "#",
+      status: "Upcoming",
+    },
+    {
+      day: "Friday",
+      topic: "Trees & Graphs",
+      resource: "2 LeetCode Problems",
+      link: "https://leetcode.com",
+      status: "Upcoming",
+    },
+  ];
+
   return (
     <div>
-
       <div className="skill-hero small">
         <h1>Practice Makes Perfect</h1>
         <p>
@@ -203,6 +240,42 @@ const SkillPractice = () => {
               </tbody>
             </table>
           </div>
+          <div className="study-plan-wrapper">
+            <div className="study-plan">
+              <div className="header">
+                <h4>Your Study Plan</h4>
+                <a href="#" className="customize-link">Customize Plan</a>
+              </div>
+              <table className="plan-table">
+                <thead>
+                  <tr>
+                    <th>Day</th>
+                    <th>Topic</th>
+                    <th>Resources</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {studyPlan.map((item, index) => (
+                    <tr key={index}>
+                      <td>{item.day}</td>
+                      <td>{item.topic}</td>
+                      <td>
+                        <a href={item.link} target="_blank" rel="noreferrer">
+                          {item.resource}
+                        </a>
+                      </td>
+                      <td>
+                        <span className={`status ${item.status.toLowerCase().replace(" ", "-")}`}>
+                          {item.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       )}
 
@@ -211,6 +284,35 @@ const SkillPractice = () => {
           <p>comming soon...😄😄</p>
         </div>
       )}
+      <footer class="compact-footer">
+        <div class="footer-content">
+          <div class="footer-section about">
+            <h3>InterviewPrep</h3>
+            <p>Helping students prepare for technical interviews with real questions from top companies.</p>
+          </div>
+
+          <div class="footer-section links">
+            <h4>Quick Links</h4>
+            <a href="#">Home</a>
+            <a href="#">Questions</a>
+            <a href="#">Practice</a>
+            <a href="#">Resources</a>
+          </div>
+
+          <div class="footer-section social">
+            <h4>Connect</h4>
+            <div class="social-icons">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          © 2023 InterviewPrep. All rights reserved.
+        </div>
+      </footer>
 
     </div>
   );
