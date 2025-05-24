@@ -15,8 +15,8 @@ const Layout = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<Herosec />} />
-        <Route path="/Mock" element={<Mock />} />
-        <Route path="/Skill" element={<SkillPractice />} />
+        <Route path="/mock" element={<Mock />} />
+        <Route path="/skill" element={<SkillPractice />} />
       </Routes>
     </>
   );

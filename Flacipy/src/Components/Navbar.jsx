@@ -17,8 +17,8 @@ const Navbar = () => {
         <div className={classes.logo}>FLACIPY</div>
         <div className={classes.linkcontainer}>
             <Link to="/" id='link' className={classes.link}><span className={classes.span}>Home</span></Link>
-            <Link to="/Mock" id='link' className={classes.link}><span className={classes.span}>Mock Interview</span></Link>
-            <Link to="/Skill" id='link' className={classes.link}><span className={classes.span}>Skill Practice</span></Link>
+            <Link to="/mock" id='link' className={classes.link}><span className={classes.span}>Mock Interview</span></Link>
+            <Link to="/skill" id='link' className={classes.link}><span className={classes.span}>Skill Practice</span></Link>
         </div>
     </div>
     </div>

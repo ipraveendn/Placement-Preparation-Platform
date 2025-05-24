@@ -28,7 +28,7 @@ const Herosec = () => {
               <div className="icon-circle"><FiMessageCircle size={20} /></div>
               <h3>Mock Interviews</h3>
               <p>Practice with HR professionals and connect with placed students from your network.</p>
-              <Link to="/Mock" className="card-link">Try Now &gt;</Link>
+              <Link to="/mock" className="card-link">Try Now &gt;</Link>
             </div>
             <div className="feature-card">
               <div className="icon-circle"><FiHelpCircle size={20} /></div>
@@ -40,7 +40,7 @@ const Herosec = () => {
               <div className="icon-circle"><HiOutlineLightBulb size={20} /></div>
               <h3>Skill Practice</h3>
               <p>Practice development skills, DSA, and find jobs matching your performance.</p>
-              <Link to="/Skill" className="card-link">Practice Now &gt;</Link>
+              <Link to="/skill" className="card-link">Practice Now &gt;</Link>
             </div>
           </div>
         </section>
