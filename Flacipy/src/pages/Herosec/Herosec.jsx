@@ -28,25 +28,19 @@ const Herosec = () => {
               <div className="icon-circle"><FiMessageCircle size={20} /></div>
               <h3>Mock Interviews</h3>
               <p>Practice with HR professionals and connect with placed students from your network.</p>
-              <a href="#" className="card-link">Try Now &gt;</a>
+              <Link to="/Mock" className="card-link">Try Now &gt;</Link>
             </div>
             <div className="feature-card">
               <div className="icon-circle"><FiHelpCircle size={20} /></div>
               <h3>Interview Questions</h3>
               <p>Access company-specific Interview questions asked in previous interviews.</p>
-              <a href="#" className="card-link">Explore &gt;</a>
+              <Link to="/" className="card-link">Explore &gt;</Link>
             </div>
             <div className="feature-card">
               <div className="icon-circle"><HiOutlineLightBulb size={20} /></div>
               <h3>Skill Practice</h3>
               <p>Practice development skills, DSA, and find jobs matching your performance.</p>
-              <Link to="/skill-practice" className="card-link">Practice Now &gt;</Link>
-            </div>
-            <div className="feature-card">
-              <div className="icon-circle"><FiFileText size={20} /></div>
-              <h3>Resume Builder</h3>
-              <p>Create ATS-friendly resumes, check scores, and download in multiple formats.</p>
-              <a href="#" className="card-link">Build Resume &gt;</a>
+              <Link to="/Skill" className="card-link">Practice Now &gt;</Link>
             </div>
           </div>
         </section>
