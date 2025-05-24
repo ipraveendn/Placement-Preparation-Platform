@@ -1,0 +1,506 @@
+.practice-header {
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  font-family: 'Arial', sans-serif;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.header-icon {
+  font-size: 1.8rem;
+  color: #4f46e5;
+  margin-right: 8px;
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1f2937;
+}
+
+.nav-links a {
+  margin-left: 24px;
+  text-decoration: none;
+  color: #1f2937;
+  font-size: 1rem;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #6a11cb;
+}
+
+.nav-links a.active {
+  color: #6a11cb;
+  font-weight: bold;
+}
+
+.skill-hero {
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  color: white;
+  text-align: center;
+  padding: 40px 20px 60px; 
+  font-family: 'Arial', sans-serif;
+  width: 85%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 18px;
+  margin-top: 35px;
+}
+
+.skill-hero h1 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.skill-hero p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.skill-hero.small {
+  padding: 45px 20px;  
+}
+
+.progress-container {
+  background-color: #f8f9fa;
+  padding: 20px 20px;
+  border-radius: 12px;
+  margin: 30px auto;
+  width: 90%;
+  max-width: 1000px;
+}
+
+.progress-header {
+  text-align: left;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.progress-header h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.progress-header .level-tag {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: #e0e7ff;
+  color: #4f46e5;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+}
+
+.progress-cards {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.progress-card {
+  flex: 1;
+  min-width: 280px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.progress-bar { 
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #6366f1;
+  transition: width 0.3s ease; 
+}
+
+.practice-tabs {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  gap: 30px;
+}
+
+.practice-tabs button {
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #4b5563;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.practice-tabs button.active {
+  color: #6a11cb;
+  border-color: #6a11cb;
+  font-weight: bold;
+}
+
+.practice-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 30px;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.practice-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 10px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px; 
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.platform-logo {
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 10px 12px;
+  border-radius: 8px;
+}
+
+.card-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.solved-count {
+  font-weight: bold;
+}
+
+.practice-bar {
+  background-color: #e5e7eb;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.practice-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.continue-practice {
+  padding: 10px;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.recommended-section {
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  max-width: 77%;
+  width: 100%;
+}
+
+.recommended-section h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.recommended-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #f9fafb;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.recommended-table th,
+.recommended-table td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.95rem;
+}
+
+.recommended-table th {
+  background-color: #f3f4f6;
+  color: #374151;
+  font-weight: 600;
+}
+
+.difficulty {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  display: inline-block;
+}
+
+.difficulty.easy {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.difficulty.medium {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.difficulty.hard {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.solve-link {
+  color: #6d28d9;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.solve-link:hover {
+  color: #4c1d95;
+}
+
+.development-placeholder {
+  margin-top: 4rem;
+  padding-left: 43%;
+  font-weight: bold;
+}
+
+.study-plan-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 18px 18px;
+  background-color: #f3f4f6;
+  min-height: 3vh;
+  border-radius: 12px;
+}
+
+.study-plan {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  padding: 12px 14px;
+  width: 100%;
+  max-width: 1200px;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3px;
+}
+
+.header h2 {
+  font-size: 1.75rem; 
+  font-weight: bold;
+  color: #111827;
+}
+
+.customize-link {
+  color: #6d28d9;
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 0.9rem; 
+}
+
+.plan-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 4px; 
+  border-radius: 12px;
+  overflow: visible;
+}
+
+.plan-table th, .plan-table td {
+  padding: 3px 54px;  
+  font-size: 0.85rem; 
+  color: #374151;
+  background-color: transparent; 
+  box-shadow: none; 
+  vertical-align: middle;
+  white-space: nowrap; 
+  border-bottom: 1px solid #e5e7eb;
+  border-radius: 0;
+}
+
+.plan-table th {
+  color: #6b7280;
+  font-weight: 600;
+  background-color: transparent; 
+  border-bottom: 2px solid #d1d5db; 
+}
+
+.plan-table a {
+  color: #6d28d9;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.status {
+  padding: 6px 16px; 
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.status.completed {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.status.in-progress {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.status.upcoming {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+@media (max-width: 768px) {
+  .study-plan {
+    padding: 16px 20px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .header h2 {
+    font-size: 1.25rem;
+  }
+
+  .customize-link {
+    font-size: 0.85rem;
+  }
+
+  .plan-table th, .plan-table td {
+    padding: 5px 15px;
+    font-size: 0.75rem;
+    white-space: normal;
+  }
+
+  .status {
+    padding: 3px 8px;
+    font-size: 0.65rem;
+  }
+}
+
+.compact-footer {
+  background-color: #1f2937;
+  color: #d1d5db;
+  font-family: Arial, sans-serif;
+  padding: 20px 10px;
+  font-size: 0.75rem;
+  margin-top: 40px;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1000px;
+  margin: auto;
+  border-bottom: 1px solid #374151;
+  padding-bottom: 10px;
+}
+
+.footer-section {
+  flex: 1 1 150px;
+  margin: 10px;
+}
+
+.footer-section h3,
+.footer-section h4 {
+  color: #ffffff;
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+}
+
+.footer-section p,
+.footer-section a {
+  font-size: 0.72rem;
+  color: #9ca3af;
+  text-decoration: none;
+  margin: 3px 0;
+  display: block;
+}
+
+.footer-section a:hover {
+  color: #ffffff;
+}
+
+.social-icons a {
+  margin-right: 8px;
+  font-size: 0.9rem;
+  color: #9ca3af;
+}
+
+.social-icons a:hover {
+  color: #ffffff;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 10px;
+  font-size: 0.7rem;
+  color: #9ca3af;
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-section {
+    margin-bottom: 10px;
+  }
+
+  .social-icons a {
+    font-size: 1.1rem;
+  }
+}

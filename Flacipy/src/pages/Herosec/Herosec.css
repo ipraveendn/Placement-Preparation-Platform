@@ -3,13 +3,12 @@
     align-items: center;
     justify-content: center;
     margin-top: 40px;
-    
 }
 .hero-sec{
     height: 100%;
     width: 85%;
     /* background: linear-gradient(rgb(69, 69, 255) rgb(117, 15, 177)); */
-    background-color: rgb(82, 82, 221);
+    background: linear-gradient(to right, #6a11cb, #2575fc);
     padding: 70px 40px;
     color: white;
     border-radius: 10px;
@@ -29,7 +28,7 @@
 }
 .get-started {
   background-color: white;
-  color:rgb(82, 82, 221) ;
+  color: black;
   border: none;
   outline: none;
   border-radius: 8px;
@@ -103,9 +102,15 @@
 }
 
 .card-link {
-  color: #6b46c1;
+  color:#007bff;
   font-weight: 500;
   text-decoration: none;
   font-size: 0.9rem;
   margin-top: auto;
+}
+
+.card-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  color: #6b46c1;
 }
