@@ -284,35 +284,6 @@ const SkillPractice = () => {
           <p>comming soon...😄😄</p>
         </div>
       )}
-      <footer class="compact-footer">
-        <div class="footer-content">
-          <div class="footer-section about">
-            <h3>InterviewPrep</h3>
-            <p>Helping students prepare for technical interviews with real questions from top companies.</p>
-          </div>
-
-          <div class="footer-section links">
-            <h4>Quick Links</h4>
-            <a href="#">Home</a>
-            <a href="#">Questions</a>
-            <a href="#">Practice</a>
-            <a href="#">Resources</a>
-          </div>
-
-          <div class="footer-section social">
-            <h4>Connect</h4>
-            <div class="social-icons">
-              <a href="#"><i class="fab fa-facebook-f"></i></a>
-              <a href="#"><i class="fab fa-twitter"></i></a>
-              <a href="#"><i class="fab fa-instagram"></i></a>
-            </div>
-          </div>
-        </div>
-
-        <div class="footer-bottom">
-          © 2023 InterviewPrep. All rights reserved.
-        </div>
-      </footer>
 
     </div>
   );
