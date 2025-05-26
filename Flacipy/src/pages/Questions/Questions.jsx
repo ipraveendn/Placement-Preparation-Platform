@@ -12,8 +12,8 @@ const Questions = () => {
         <div>
             <input
             type="text"
-            value={inputValue}
-            onChange={handleChange}
+            value=""
+            onChange=""
             placeholder="Search by company name (eg., Google, Microsoft, Amazon etc..."
             />
             <button type="button"> Search Questions</button>

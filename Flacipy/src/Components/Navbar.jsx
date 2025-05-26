@@ -1,5 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link,useLocation } from 'react-router-dom';
 
 const classes = {
     container0: "bg-white text-black flex justify-center items-center shadow-xl sticky top-0 z-50",
@@ -11,6 +12,7 @@ const classes = {
 };
 
 const Navbar = () => {
+
   return (
     <div className={classes.container0}>
     <div className={classes.container}>
@@ -19,6 +21,7 @@ const Navbar = () => {
             <Link to="/" id='link' className={classes.link}><span className={classes.span}>Home</span></Link>
             <Link to="/mock" id='link' className={classes.link}><span className={classes.span}>Mock Interview</span></Link>
             <Link to="/skill" id='link' className={classes.link}><span className={classes.span}>Skill Practice</span></Link>
+            <Link to="/questions" id='link' className={classes.link}><span className={classes.span}>Interview Questions</span></Link>
         </div>
     </div>
     </div>

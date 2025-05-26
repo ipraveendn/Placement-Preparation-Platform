@@ -7,27 +7,35 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Herosec from './pages/Herosec/Herosec';
 import Mock from './pages/Mock';
 import SkillPractice from './pages/SkillPractice/SkillPractice';
+import Questions from './pages/Questions/Questions';
+import Login from './Components/login';
+import Register from './Components/register';
 
-const Layout = () => {
+const AppContent = () => {
+  const location = useLocation();
+  const hideNavbar = location.pathname === '/login' || location.pathname === '/register';
 
   return (
     <>
-      <Navbar />
+      {!hideNavbar && <Navbar />}
       <Routes>
         <Route path="/" element={<Herosec />} />
         <Route path="/mock" element={<Mock />} />
         <Route path="/skill" element={<SkillPractice />} />
+        <Route path="/questions" element={<Questions />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </>
   );
 };
 
-function App() {
+const App = () => {
   return (
     <Router>
-      <Layout />
+      <AppContent />
     </Router>
   );
-}
+};
 
 export default App;
