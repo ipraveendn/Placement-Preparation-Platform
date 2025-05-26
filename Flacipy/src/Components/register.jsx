@@ -24,10 +24,6 @@ const Register = () => {
             <div>
                 <form>
                     <div className={classes.formcont}>
-                        <label htmlFor="username" className={classes.name}>Username:</label>
-                        <input className={classes.input} type="text" id="username" name="username" required />
-                    </div>
-                    <div className={classes.formcont}>
                         <label htmlFor="name" className={classes.name}>Name:</label>
                         <input className={classes.input} type="text" id="name" name="name" required />
                     </div>

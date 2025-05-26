@@ -24,8 +24,8 @@ const Login = () => {
             <div>
                 <form>
                     <div className={classes.formcont}>
-                        <label htmlFor="username" className={classes.name}>Username:</label>
-                        <input className={classes.input} type="text" id="username" name="username" required />
+                        <label htmlFor="email" className={classes.name}>Email:</label>
+                        <input className={classes.input} type="text" id="email" name="email" required />
                     </div>
                     <div className={classes.formcont}>
                         <label htmlFor="password" className={classes.name}>Password:</label>
