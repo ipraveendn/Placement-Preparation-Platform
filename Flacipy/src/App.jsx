@@ -32,6 +32,7 @@ const AppContent = () => {
         <Route path="/" element={<Herosec />} />
         <Route path="/mock" element={<Mock />} />
         <Route path="/skill" element={<SkillPractice />} />
+        <Route path="/questions" element={<Questions />} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/add-hr" element={
           <ProtectedRoute>
@@ -44,7 +45,7 @@ const AppContent = () => {
           </ProtectedRoute>
         } />
       </Routes>
-      {!hideNavbar && <Footer />}
+      {!shouldHideNavbar && <Footer />}
     </>
   );
 };
