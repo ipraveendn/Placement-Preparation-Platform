@@ -5,6 +5,8 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import video from '../assets/video.svg';
 import x from '../assets/x.svg';
+import axios from 'axios'
+import {toast} from 'sonner'
 
 const classes = {
   button1: "bg-[#5252dd] rounded-[10px] text-white font-bold text-md flex flex-row items-center justify-center gap-2 p-2 mt-4 hover:bg-[#5252dd]/80 hover:cursor-pointer",
@@ -16,7 +18,7 @@ const classes = {
   inside: 'w-full h-[40px] text-[9px] rounded-[7px] border-solid border-[1px] border-zinc-800 text-black text-[16px] px-[15px] mt-[5px] hover:border-[#141414]',
   inside1: 'w-full border-solid border-[1px] border-zinc-800 text-black h-[40px] hover:border-[#141414] rounded-[7px] mb-[35px]',
   inside2: 'text-[9px] w-full h-[40px] rounded-[7px] px-[10px]',
-  name1:'text-[16px] ml-[5px] mb-[3px] font-medium text-black',
+  name1: 'text-[16px] ml-[5px] mb-[3px] font-medium text-black',
   input: 'mb-[15px]',
   button2: 'h-[40px] w-full font-medium rounded-[7px] bg-[#5252dd] border-solid border-[1px] border-zinc-900 text-white text-[16px] px-[15px] hover:bg-[#5252dd]/80 hover:border-[#141414] cursor-pointer',
 };
@@ -34,12 +36,43 @@ const style = {
 
 export default function Hrform() {
   const [open, setOpen] = React.useState(false);
+  const [position, setPosition] = React.useState('');
+  const [date, setDate] = React.useState('');
+  const [time, setTime] = React.useState('');
+  const [message, setMessage] = React.useState('');
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await axios.post('http://localhost:5000/api/interview', {
+        type: "HR",
+        position,
+        date,
+        time,
+        score: "Pending" // Optional placeholder or can remove if not required in schema
+
+      });
+      toast.success(res.data.message)
+      setPosition('');
+      setDate('');
+      setTime('');
+      handleClose();
+
+    } catch (error) {
+      toast.error("Failed scheduling interview.")
+      console.error(error);
+    }
+  }
+
   return (
     <div>
-      <div onClick={handleOpen} className={classes.button1}><img src={video} className={classes.img1}></img><span>Schedule HR Interview</span></div>
+      <div onClick={handleOpen} className={classes.button1}>
+      <img src={video} className={classes.img1}/>
+        <span>Schedule HR Interview</span></div>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -59,16 +92,16 @@ export default function Hrform() {
               <div className={classes.name}>Schedule HR Interview</div><img className={classes.x} src={x} onClick={handleClose} open={open}></img>
             </div>
             <div>
-            <form>
-              <label className={classes.name1}>Position:</label><br/>
+              <form onSubmit={handleSubmit}>
+                <label className={classes.name1}>Position:</label><br />
                 <div className={classes.input}>
-                  <input type='text' className={classes.inside} id='input' placeholder='Enter the position' onChange={(e) => setPosition(e.target.value)} required/>
+                  <input type='text' className={classes.inside} id='input' placeholder='Enter the position' onChange={(e) => setPosition(e.target.value)} required />
                 </div>
-                <label className={classes.name1}>Preferred Date:</label><br/>
+                <label className={classes.name1}>Preferred Date:</label><br />
                 <div className={classes.input}>
-                  <input type='date' className={classes.inside} id='input' onChange={(e) => setDate(e.target.value)} required/>
+                  <input type='date' className={classes.inside} id='input' onChange={(e) => setDate(e.target.value)} required />
                 </div>
-              <label className={classes.name1}>Preferred Time:</label><br/>
+                <label className={classes.name1}>Preferred Time:</label><br />
                 <div className={classes.inside1}>
                   <select id='input' onChange={(e) => setTime(e.target.value)} className={classes.inside2} required>
                     <option value=''>Select a time slot</option>
@@ -77,9 +110,9 @@ export default function Hrform() {
                   </select>
                 </div>
                 <div>
-                  <input type='submit' id='input' placeholder='Confirm booking' className={classes.button2} required/>
+                  <input type='submit' id='input' placeholder='Confirm booking' className={classes.button2} required />
                 </div>
-            </form>
+              </form>
             </div>
           </Box>
         </Fade>
