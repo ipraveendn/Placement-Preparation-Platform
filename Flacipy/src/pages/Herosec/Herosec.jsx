@@ -15,8 +15,8 @@ const Herosec = () => {
         questions, skill practice and resume building tools.
       </p>
       <div className="buttons-hero-sec">
-        <button className="get-started">Get Started</button>
-        <button className="learn-more">Learn More</button>
+        <Link to='/register' id="link" className="get-started">Get Started</Link>
+        <Link to='/register' id="link" className="learn-more">Learn More</Link>
       </div>
     </div>
     </div>
@@ -34,7 +34,7 @@ const Herosec = () => {
               <div className="icon-circle"><FiHelpCircle size={20} /></div>
               <h3>Interview Questions</h3>
               <p>Access company-specific Interview questions asked in previous interviews.</p>
-              <Link to="/" className="card-link">Explore &gt;</Link>
+              <Link to="/questions" className="card-link">Explore &gt;</Link>
             </div>
             <div className="feature-card">
               <div className="icon-circle"><HiOutlineLightBulb size={20} /></div>
