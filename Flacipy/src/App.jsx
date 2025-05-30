@@ -10,6 +10,7 @@ import SkillPractice from './pages/SkillPractice/SkillPractice';
 import Questions from './pages/Questions/Questions';
 import Login from './Components/login';
 import Register from './Components/register';
+import Footer from './Components/footer';
 
 const AppContent = () => {
   const location = useLocation();
@@ -26,6 +27,7 @@ const AppContent = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>
+      {!hideNavbar && <Footer />}
     </>
   );
 };

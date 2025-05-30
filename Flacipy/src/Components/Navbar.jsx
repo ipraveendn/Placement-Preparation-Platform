@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { Link,useLocation } from 'react-router-dom';
 
 const classes = {
-    container0: "bg-white text-black flex justify-center items-center shadow-xl sticky top-0 z-50",
-    container: "flex justify-between items-center w-[85%] py-[20px]",
+    container0: "bg-white text-black flex justify-center items-center shadow-xl",
+    container: "flex justify-between items-center w-[85%] py-4",
     logo: "text-3xl font-bold",
     link: "text-black text-[18px] font-semibold",
     linkcontainer: "flex items-center gap-4 justify-center",
