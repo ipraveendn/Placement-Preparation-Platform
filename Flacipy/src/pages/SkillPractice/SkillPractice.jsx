@@ -280,11 +280,211 @@ const SkillPractice = () => {
       )}
 
       {activeTab === 'dev' && (
-        <div className="development-placeholder">
-          <p>comming soon...😄😄</p>
+        <div className="dev-cards-container">
+          {[
+            {
+              logo: 'FM',
+              name: 'Frontend Mentor',
+              description: 'Improve your front-end skills by building real projects',
+              color: '#2563eb',
+              completed: 5,
+              total: 10,
+              url: 'https://www.frontendmentor.io/',
+            },
+            {
+              logo: 'GH',
+              name: 'GitHub Learning Lab',
+              description: 'Learn new skills by completing fun, realistic projects',
+              color: '#111827',
+              completed: 3,
+              total: 8,
+              url: 'https://lab.github.com/',
+            },
+            {
+              logo: 'CA',
+              name: 'Codecademy',
+              description: 'Learn to code interactively with hands-on exercises',
+              color: '#8b5cf6',
+              completed: 2,
+              total: 4,
+              url: 'https://www.codecademy.com/',
+            },
+          ].map((platform, index) => {
+            const progress = (platform.completed / platform.total) * 100;
+
+            return (
+              <div className="dev-card" key={index}>
+                <div className="dev-header">
+                  <div
+                    className="dev-logo"
+                    style={{ backgroundColor: platform.color }}
+                  >
+                    {platform.logo}
+                  </div>
+                  <h5 className="dev-title">{platform.name}</h5>
+                </div>
+
+                <p className="dev-description">{platform.description}</p>
+
+                <div className="dev-stats">
+                  <span className="dev-stats-label">
+                    {platform.name === 'Frontend Mentor'
+                      ? 'Projects Completed'
+                      : 'Courses Completed'}
+                  </span>
+                  <span className="dev-progress-count">
+                    {platform.completed} / {platform.total}
+                  </span>
+                </div>
+
+                <div className="dev-progress-bar">
+                  <div
+                    className="dev-progress-fill"
+                    style={{
+                      width: `${progress}%`,
+                      backgroundColor: platform.color,
+                    }}
+                  />
+                </div>
+                <button
+                  className="dev-practice-button"
+                  style={{ backgroundColor: platform.color }}
+                  onClick={() => window.open(platform.url, '_blank')}
+                >
+                  Continue Practice
+                </button>
+              </div>
+            );
+          })}
+          <div className="dashboard-container">
+            <div className="left-panel">
+              <h2>Skills Progress</h2>
+
+              <div className="skill-block">
+                <div className="skill-label">
+                  <span>HTML/CSS</span>
+                  <span>85%</span>
+                </div>
+                <div className="progress-bar">
+                  <div className="progress-fill" style={{ width: '85%' }}></div>
+                </div>
+              </div>
+
+              <div className="skill-block">
+                <div className="skill-label">
+                  <span>JavaScript</span>
+                  <span>70%</span>
+                </div>
+                <div className="progress-bar">
+                  <div className="progress-fill" style={{ width: '70%' }}></div>
+                </div>
+              </div>
+
+              <div className="skill-block">
+                <div className="skill-label">
+                  <span>React</span>
+                  <span>55%</span>
+                </div>
+                <div className="progress-bar">
+                  <div className="progress-fill" style={{ width: '55%' }}></div>
+                </div>
+              </div>
+
+              <div className="skill-block">
+                <div className="skill-label">
+                  <span>Node.js</span>
+                  <span>40%</span>
+                </div>
+                <div className="progress-bar">
+                  <div className="progress-fill" style={{ width: '40%' }}></div>
+                </div>
+              </div>
+
+              <div className="skill-block">
+                <div className="skill-label">
+                  <span>Database</span>
+                  <span>30%</span>
+                </div>
+                <div className="progress-bar">
+                  <div className="progress-fill" style={{ width: '30%' }}></div>
+                </div>
+              </div>
+            </div>
+
+            <div className="right-panel">
+              <h2>Recent Projects</h2>
+
+              <div className="project-card">
+                <div>
+                  <h3>Personal Portfolio</h3>
+                  <p>A responsive portfolio website showcasing your projects</p>
+                </div>
+                <span className="status completed">Completed</span>
+              </div>
+
+              <div className="project-card">
+                <div>
+                  <h3>Weather App</h3>
+                  <p>A web app that displays weather information using an API</p>
+                </div>
+                <span className="status completed">Completed</span>
+              </div>
+
+              <div className="project-card">
+                <div>
+                  <h3>E-commerce Site</h3>
+                  <p>An online store with product listings and shopping cart</p>
+                </div>
+                <span className="status inprogress">In Progress</span>
+              </div>
+
+              <div className="project-card">
+                <div>
+                  <h3>Social Media Dashboard</h3>
+                  <p>A dashboard to track social media statistics</p>
+                </div>
+                <span className="status notstarted">Not Started</span>
+              </div>
+            </div>
+          </div>
+          <div className="study-plan-wrapper">
+            <div className="study-plan">
+              <div className="header">
+                <h4>Your Study Plan</h4>
+                <a href="#" className="customize-link">Customize Plan</a>
+              </div>
+              <table className="plan-table">
+                <thead>
+                  <tr>
+                    <th>Day</th>
+                    <th>Topic</th>
+                    <th>Resources</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {studyPlan.map((item, index) => (
+                    <tr key={index}>
+                      <td>{item.day}</td>
+                      <td>{item.topic}</td>
+                      <td>
+                        <a href={item.link} target="_blank" rel="noreferrer">
+                          {item.resource}
+                        </a>
+                      </td>
+                      <td>
+                        <span className={`status ${item.status.toLowerCase().replace(" ", "-")}`}>
+                          {item.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       )}
-
     </div>
   );
 };
