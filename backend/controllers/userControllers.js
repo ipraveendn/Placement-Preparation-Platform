@@ -73,4 +73,30 @@ const registerUser = async (req,res)=>{
     }
 }
 
-export {loginUser,registerUser};
+// Admin Login
+const adminLogin = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        console.log("Login attempt:", email, password);
+        console.log("Expected:", process.env.ADMIN_EMAIL, process.env.ADMIN_PASSWORD);
+
+        if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+            const token = jwt.sign(
+                { email }, // payload as object
+                process.env.JWT_SECRET,
+                { expiresIn: '1d' } // recommended expiration
+            );
+
+            res.json({ success: true, token });
+        } else {
+            res.status(401).json({ success: false, message: 'Invalid credentials' });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+  
+
+export {loginUser,registerUser,adminLogin};

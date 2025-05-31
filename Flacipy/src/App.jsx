@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
 import Navbar from './Components/Navbar';
@@ -10,31 +9,57 @@ import SkillPractice from './pages/SkillPractice/SkillPractice';
 import Questions from './pages/Questions/Questions';
 import Login from './Components/login';
 import Register from './Components/register';
+import Footer from './Components/footer';
+import ProtectedRoute from './Components/ProtectedRoute';
+import AddHRPage from './pages/Admin/addHr';
+import AdminLogin from './pages/Admin/AdminLogin';
+import { Toaster } from 'sonner';
+import AdminDashboard from './pages/Admin/AdminDashboard';
+
+
 
 const AppContent = () => {
   const location = useLocation();
-  const hideNavbar = location.pathname === '/login' || location.pathname === '/register';
+
+  const hideNavbarRoutes = ['/admin/login', '/admin/dashboard','/add-hr'];
+
+  const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
 
   return (
     <>
-      {!hideNavbar && <Navbar />}
+      {!shouldHideNavbar && <Navbar />}
       <Routes>
         <Route path="/" element={<Herosec />} />
         <Route path="/mock" element={<Mock />} />
         <Route path="/skill" element={<SkillPractice />} />
         <Route path="/questions" element={<Questions />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/add-hr" element={
+          <ProtectedRoute>
+            <AddHRPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/admin/dashboard" element={
+          <ProtectedRoute>
+            <AdminDashboard />
+          </ProtectedRoute>
+        } />
       </Routes>
+      {!shouldHideNavbar && <Footer />}
     </>
   );
 };
 
-const App = () => {
+
+function App() {
+
   return (
-    <Router>
-      <AppContent />
-    </Router>
+    <main>
+      <Router>
+      <AppContent/>
+      </Router>
+      <Toaster richColors position='top-center' />
+    </main>
   );
 };
 

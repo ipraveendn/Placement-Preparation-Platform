@@ -5,14 +5,14 @@ import { Link } from 'react-router-dom';
 
 const classes = {
     container: "text-white flex flex-col justify-center items-center shadow-xl w-screen h-screen",
-    container1: "bg-violet-700 p-10 shadow-2xl rounded-[30px] w-[33%]",
+    container1: "bg-violet-700 p-4 shadow-2xl rounded-[30px] w-[33%]",
     head: "text-4xl font-bold text-center mb-4",
-    formcont: "flex flex-col mb-1",
+    formcont: "flex flex-col mb-2",
     input: "p-2 bg-white rounded-[10px] text-black h-[35px] border-[0.5px] border-gray-300 focus:outline-none",
     name: "text-[18px] font-semibold mb-1",
-    button: "text-violet-700 hover:text-white p-2 font-semibold flex justify-center w-full items-center",
+    button: "text-violet-700 hover:text-white hover:border-[0.5px] hover:bg-violet-700 p-2 font-semibold flex justify-center w-full items-center",
     span: "hover:text-[#2575fc] text-white ",
-    butcont: "mt-[40px] mb-[20px] rounded-[10px] bg-white hover:bg-violet-700 flex justify-center items-center",
+    butcont: "mt-4 mb-2 rounded-[10px] bg-white hover:bg-violet-700 flex justify-center items-center",
     home: "mt-2",
 };
 
