@@ -15,6 +15,7 @@ import AddHRPage from './pages/Admin/addHr';
 import AdminLogin from './pages/Admin/AdminLogin';
 import { Toaster } from 'sonner';
 import AdminDashboard from './pages/Admin/AdminDashboard';
+import Profile from './pages/Profile/Profile';
 
 
 
@@ -44,6 +45,7 @@ const AppContent = () => {
             <AdminDashboard />
           </ProtectedRoute>
         } />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
       {!shouldHideNavbar && <Footer />}
     </>
