@@ -15,7 +15,7 @@ const SignUp = () => {
     useEffect(() => {
         const token = localStorage.getItem('userToken');
         if (token) {
-            navigate('/user/dashboard');
+            navigate('/');
         }
     }, [navigate]);
 
@@ -31,7 +31,7 @@ const SignUp = () => {
         try {
             setLoading(true);
             const response = await axios.post('http://localhost:5000/api/user/register', formData);
-            
+
             if (response.data.success) {
                 toast.success('Registration successful! Please login.');
                 navigate('/login');

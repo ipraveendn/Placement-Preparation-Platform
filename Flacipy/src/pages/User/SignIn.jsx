@@ -14,7 +14,7 @@ const SignIn = () => {
     useEffect(() => {
         const token = localStorage.getItem('userToken');
         if (token) {
-            navigate('/user/dashboard');
+            navigate('/');
         }
     }, [navigate]);
 
@@ -30,11 +30,11 @@ const SignIn = () => {
         try {
             setLoading(true);
             const response = await axios.post('http://localhost:5000/api/user/login', formData);
-            
+
             if (response.data.success) {
                 localStorage.setItem('userToken', response.data.token);
                 toast.success('Login successful!');
-                navigate('/user/dashboard');
+                navigate('/');
             }
         } catch (error) {
             toast.error(error.response?.data?.message || 'Login failed');
