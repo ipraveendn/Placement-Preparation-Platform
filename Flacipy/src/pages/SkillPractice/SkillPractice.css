@@ -505,3 +505,186 @@
     font-size: 1.1rem;
   }
 }
+
+.dev-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 30px;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.dev-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 10px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px; 
+}
+
+.dev-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dev-logo {
+ color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 10px 12px;
+  border-radius: 8px;
+}
+
+.dev-title {
+  font-size: 1rem;
+  font-weight: 650;
+  color: #303337;
+}
+
+.dev-description {
+  font-size: 0.98rem;
+  color: #2f2f31;
+  margin-top: -8px;
+}
+
+.dev-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dev-progress-count {
+  font-weight: bold;
+}
+.dev-stats-label {
+  color: #3a2d2d;
+  font-weight: 500;
+}
+.dev-progress-bar {
+  background-color: #e5e7eb;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.dev-progress-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.dev-practice-button {
+  padding: 10px;
+  color: white;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+  
+.dashboard-container {
+  margin: 30px auto;
+  padding: 25px 88px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  gap: 60px;
+  font-family: 'Segoe UI', sans-serif;
+  max-width: 1400px;
+  height: auto;
+}
+
+.left-panel {
+  flex: 1.5;
+}
+
+.right-panel {
+  flex: 1.8;
+}
+
+h2 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.skill-block {
+  margin-bottom: 20px;
+}
+
+.skill-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background-color: #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #5e5eff;
+  border-radius: 8px;
+}
+
+.project-card {
+  background: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding:12px 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.project-card h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #111;
+}
+
+.project-card p {
+  margin: 6px 0 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status.completed {
+  background-color: #d4f8dc;
+  color: #1a7f37;
+}
+
+.status.inprogress {
+  background-color: #fff4cc;
+  color: #b58900;
+}
+
+.status.notstarted {
+  background-color: #dce2f8;
+  color: #1a3f8f;
+}
+
+
