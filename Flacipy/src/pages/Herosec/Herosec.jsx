@@ -15,8 +15,8 @@ const Herosec = () => {
         questions, skill practice and resume building tools.
       </p>
       <div className="buttons-hero-sec">
-        <Link to='/register' id="link" className="get-started">Get Started</Link>
-        <Link to='/register' id="link" className="learn-more">Learn More</Link>
+        <Link to='' id="link" className="get-started">Get Started</Link>
+        <Link to='/signup' id="link" className="learn-more">Learn More</Link>
       </div>
     </div>
     </div>

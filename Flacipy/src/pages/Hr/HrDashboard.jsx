@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 const HrDashboard = () => {
     const navigate = useNavigate();
     const [interviews, setInterviews] = useState([]);
+    const [pendingRequests, setPendingRequests] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedInterview, setSelectedInterview] = useState(null);
@@ -17,28 +18,41 @@ const HrDashboard = () => {
     const [feedback, setFeedback] = useState('');
 
     useEffect(() => {
-        fetchInterviews();
+        fetchUpcomingInterviews();
+        fetchPendingRequests();
     }, []);
 
-    const fetchInterviews = async () => {
+    const fetchUpcomingInterviews = async () => {
         try {
             setLoading(true);
+            setError(null);
             const token = localStorage.getItem('hrToken');
+
             if (!token) {
+                toast.error('Please login to access the dashboard');
                 navigate('/hr/login');
                 return;
             }
 
-            const response = await axios.get('http://localhost:5000/api/mock-interview/hr-interviews', {
-                headers: { Authorization: `Bearer ${token}` }
+            const response = await axios.get('http://localhost:5000/api/interview-request/upcoming', {
+                headers: {
+                    'Authorization': token.startsWith('Bearer ') ? token : `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
             });
 
             if (response.data.success) {
                 setInterviews(response.data.data);
+            } else {
+                setError(response.data.message || 'Failed to fetch upcoming interviews');
             }
         } catch (error) {
-            setError(error.response?.data?.message || 'Failed to fetch interviews');
+            const errorMessage = error.response?.data?.message || error.message || 'Failed to fetch upcoming interviews';
+            setError(errorMessage);
+            toast.error(errorMessage);
+
             if (error.response?.status === 401) {
+                localStorage.removeItem('hrToken');
                 navigate('/hr/login');
             }
         } finally {
@@ -46,19 +60,51 @@ const HrDashboard = () => {
         }
     };
 
+    const fetchPendingRequests = async () => {
+        try {
+            setError(null);
+            const token = localStorage.getItem('hrToken');
+
+            if (!token) return;
+
+            const response = await axios.get('http://localhost:5000/api/interview-request/pending', {
+                headers: {
+                    'Authorization': token.startsWith('Bearer ') ? token : `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.data.success) {
+                setPendingRequests(response.data.data);
+            } else {
+                setError(response.data.message || 'Failed to fetch pending requests');
+            }
+        } catch (error) {
+            const errorMessage = error.response?.data?.message || error.message || 'Failed to fetch pending requests';
+            setError(errorMessage);
+            toast.error(errorMessage);
+
+            if (error.response?.status === 401) {
+                localStorage.removeItem('hrToken');
+                navigate('/hr/login');
+            }
+        }
+    };
+
     const handleScoreSubmit = async (e) => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('hrToken');
+            if (!token) {
+                toast.error('Please login to submit scores');
+                navigate('/hr/login');
+                return;
+            }
+
             const response = await axios.post(
                 `http://localhost:5000/api/mock-interview/submit-scores/${selectedInterview._id}`,
-                {
-                    scores,
-                    feedback
-                },
-                {
-                    headers: { Authorization: `Bearer ${token}` }
-                }
+                { scores, feedback },
+                { headers: { 'Authorization': `Bearer ${token}` } }
             );
 
             if (response.data.success) {
@@ -66,10 +112,15 @@ const HrDashboard = () => {
                 setSelectedInterview(null);
                 setScores({ technical: '', communication: '', problemSolving: '' });
                 setFeedback('');
-                fetchInterviews();
+                fetchUpcomingInterviews();
             }
         } catch (error) {
-            toast.error(error.response?.data?.message || 'Failed to submit scores');
+            const errorMessage = error.response?.data?.message || error.message || 'Failed to submit scores';
+            toast.error(errorMessage);
+            if (error.response?.status === 401) {
+                localStorage.removeItem('hrToken');
+                navigate('/hr/login');
+            }
         }
     };
 
@@ -78,132 +129,256 @@ const HrDashboard = () => {
         navigate('/hr/login');
     };
 
+    const handleAcceptRequest = async (requestId) => {
+        try {
+            setLoading(true);
+            const token = localStorage.getItem('hrToken');
+            if (!token) {
+                toast.error('Please login to perform this action.');
+                navigate('/hr/login');
+                return;
+            }
+
+            const response = await axios.post(
+                'http://localhost:5000/api/interview-request/accept',
+                { requestId },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+
+            if (response.data.success) {
+                toast.success('Request accepted successfully!');
+                fetchPendingRequests();
+            }
+        } catch (error) {
+            toast.error(error.response?.data?.message || 'Failed to accept request');
+            if (error.response?.status === 401) {
+                localStorage.removeItem('hrToken');
+                navigate('/hr/login');
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleRejectRequest = async (requestId) => {
+        const reason = prompt("Please provide a reason for rejection (optional):");
+
+        try {
+            setLoading(true);
+            const token = localStorage.getItem('hrToken');
+            if (!token) {
+                toast.error('Please login to perform this action.');
+                navigate('/hr/login');
+                return;
+            }
+
+            const response = await axios.post(
+                'http://localhost:5000/api/interview-request/reject',
+                { requestId, reason },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+
+            if (response.data.success) {
+                toast.success('Request rejected successfully!');
+                fetchPendingRequests();
+            }
+        } catch (error) {
+            toast.error(error.response?.data?.message || 'Failed to reject request');
+            if (error.response?.status === 401) {
+                localStorage.removeItem('hrToken');
+                navigate('/hr/login');
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
-        <div className="p-6 min-h-screen bg-gray-100">
+        <div className="min-h-screen bg-gradient-to-r from-blue-50 to-indigo-50 p-4 md:p-8">
             <div className="max-w-7xl mx-auto">
-                <div className="flex justify-between items-center mb-8">
-                    <h1 className="text-3xl font-bold">HR Dashboard</h1>
+                {/* Header */}
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+                    <div>
+                        <h1 className="text-3xl font-bold text-gray-800">HR Dashboard</h1>
+                        <p className="text-gray-600">Manage interviews and candidate evaluations</p>
+                    </div>
                     <button
                         onClick={handleLogout}
-                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                        className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg shadow transition-colors"
                     >
                         Logout
                     </button>
                 </div>
 
+                {/* Error Message */}
                 {error && (
-                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                        {error}
+                    <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded">
+                        <p>{error}</p>
                     </div>
                 )}
 
+                {/* Loading State */}
                 {loading ? (
-                    <div className="flex justify-center items-center py-8">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+                    <div className="flex justify-center items-center py-12">
+                        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        {/* Interview List */}
-                        <div className="bg-white rounded-lg shadow p-6">
-                            <h2 className="text-xl font-semibold mb-4">Upcoming Interviews</h2>
-                            <div className="space-y-4">
-                                {interviews.map((interview) => (
-                                    <div
-                                        key={interview._id}
-                                        className="border rounded-lg p-4 hover:bg-gray-50 cursor-pointer"
-                                        onClick={() => setSelectedInterview(interview)}
-                                    >
-                                        <div className="flex justify-between items-start">
-                                            <div>
-                                                <h3 className="font-medium">{interview.position}</h3>
-                                                <p className="text-sm text-gray-600">
-                                                    {interview.userId.name}
-                                                </p>
-                                                <p className="text-sm text-gray-600">
-                                                    {new Date(interview.date).toLocaleDateString()} at {interview.time}
-                                                </p>
-                                            </div>
-                                            <span className={`px-2 py-1 rounded text-sm ${
-                                                interview.status === 'completed' ? 'bg-green-100 text-green-800' :
-                                                interview.status === 'scheduled' ? 'bg-blue-100 text-blue-800' :
-                                                'bg-yellow-100 text-yellow-800'
-                                            }`}>
-                                                {interview.status}
-                                            </span>
-                                        </div>
-                                    </div>
-                                ))}
+                        {/* Upcoming Interviews Card */}
+                        <div className="bg-white rounded-xl shadow-md overflow-hidden">
+                            <div className="bg-blue-600 p-4">
+                                <h2 className="text-xl font-semibold text-white">Upcoming Interviews</h2>
+                            </div>
+                            <div className="p-4">
+                                {interviews.length === 0 ? (
+                                    <p className="text-gray-500 text-center py-4">No upcoming interviews scheduled.</p>
+                                ) : (
+                                    <ul className="divide-y divide-gray-200">
+                                        {interviews.map(interview => (
+                                            <li key={interview._id} className="py-4">
+                                                <div className="flex flex-col sm:flex-row justify-between gap-3">
+                                                    <div>
+                                                        <p className="font-medium text-gray-900">{interview.userId?.name}</p>
+                                                        <p className="text-sm text-gray-600">Position: {interview.position}</p>
+                                                        <p className="text-sm text-gray-600">
+                                                            {new Date(interview.date).toLocaleDateString()} at {interview.time}
+                                                        </p>
+                                                    </div>
+                                                    <button
+                                                        onClick={() => setSelectedInterview(interview)}
+                                                        className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm whitespace-nowrap self-end sm:self-center transition-colors"
+                                                    >
+                                                        Submit Feedback
+                                                    </button>
+                                                </div>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
                             </div>
                         </div>
 
-                        {/* Score Submission Form */}
-                        {selectedInterview && (
-                            <div className="bg-white rounded-lg shadow p-6">
-                                <h2 className="text-xl font-semibold mb-4">Submit Scores</h2>
-                                <form onSubmit={handleScoreSubmit} className="space-y-4">
+                        {/* Pending Requests Card */}
+                        <div className="bg-white rounded-xl shadow-md overflow-hidden">
+                            <div className="bg-indigo-600 p-4">
+                                <h2 className="text-xl font-semibold text-white">Pending Interview Requests</h2>
+                            </div>
+                            <div className="p-4">
+                                {pendingRequests.length === 0 ? (
+                                    <p className="text-gray-500 text-center py-4">No pending interview requests.</p>
+                                ) : (
+                                    <ul className="divide-y divide-gray-200">
+                                        {pendingRequests.map(request => (
+                                            <li key={request._id} className="py-4">
+                                                <div className="flex flex-col sm:flex-row justify-between gap-3">
+                                                    <div>
+                                                        <p className="font-medium text-gray-900">{request.userId?.name}</p>
+                                                        <p className="text-sm text-gray-600">Position: {request.position}</p>
+                                                        <p className="text-sm text-gray-600">
+                                                            {new Date(request.date).toLocaleDateString()} at {request.time}
+                                                        </p>
+                                                    </div>
+                                                    <div className="flex gap-2 self-end sm:self-center">
+                                                        <button
+                                                            onClick={() => handleAcceptRequest(request._id)}
+                                                            disabled={loading}
+                                                            className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-lg text-sm transition-colors disabled:opacity-50"
+                                                        >
+                                                            Accept
+                                                        </button>
+                                                        <button
+                                                            onClick={() => handleRejectRequest(request._id)}
+                                                            disabled={loading}
+                                                            className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm transition-colors disabled:opacity-50"
+                                                        >
+                                                            Reject
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* Feedback Modal */}
+                {selectedInterview && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+                        <div className="bg-white rounded-xl shadow-2xl max-w-md w-full">
+                            <div className="bg-blue-600 p-4 rounded-t-xl">
+                                <h3 className="text-xl font-semibold text-white">
+                                    Feedback for {selectedInterview.userId?.name}
+                                </h3>
+                            </div>
+                            <form onSubmit={handleScoreSubmit} className="p-6">
+                                <div className="space-y-4">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700">
-                                            Technical Score
-                                        </label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">Technical Score (0-100)</label>
                                         <input
                                             type="number"
                                             min="0"
                                             max="100"
                                             value={scores.technical}
-                                            onChange={(e) => setScores(prev => ({ ...prev, technical: e.target.value }))}
-                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                            onChange={(e) => setScores({ ...scores, technical: e.target.value })}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                                             required
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700">
-                                            Communication Score
-                                        </label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">Communication Score (0-100)</label>
                                         <input
                                             type="number"
                                             min="0"
                                             max="100"
                                             value={scores.communication}
-                                            onChange={(e) => setScores(prev => ({ ...prev, communication: e.target.value }))}
-                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                            onChange={(e) => setScores({ ...scores, communication: e.target.value })}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                                             required
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700">
-                                            Problem Solving Score
-                                        </label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">Problem Solving Score (0-100)</label>
                                         <input
                                             type="number"
                                             min="0"
                                             max="100"
                                             value={scores.problemSolving}
-                                            onChange={(e) => setScores(prev => ({ ...prev, problemSolving: e.target.value }))}
-                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                            onChange={(e) => setScores({ ...scores, problemSolving: e.target.value })}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                                             required
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700">
-                                            Feedback
-                                        </label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">Feedback</label>
                                         <textarea
                                             value={feedback}
                                             onChange={(e) => setFeedback(e.target.value)}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                                             rows="4"
-                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                                             required
-                                        />
+                                        ></textarea>
                                     </div>
+                                </div>
+                                <div className="flex justify-end gap-3 mt-6">
+                                    <button
+                                        type="button"
+                                        onClick={() => setSelectedInterview(null)}
+                                        className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                                    >
+                                        Cancel
+                                    </button>
                                     <button
                                         type="submit"
-                                        className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                                        className="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-lg transition-colors"
                                     >
-                                        Submit Scores
+                                        Submit
                                     </button>
-                                </form>
-                            </div>
-                        )}
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 )}
             </div>
@@ -211,4 +386,4 @@ const HrDashboard = () => {
     );
 };
 
-export default HrDashboard; 
+export default HrDashboard;

@@ -30,14 +30,21 @@ const SignUp = () => {
         e.preventDefault();
         try {
             setLoading(true);
-            const response = await axios.post('http://localhost:5000/api/user/register', formData);
+            console.log('Sending registration request with data:', formData);
+
+            const response = await axios.post('http://localhost:5000/api/users/register', formData);
+            console.log('Registration response:', response.data);
 
             if (response.data.success) {
-                toast.success('Registration successful! Please login.');
-                navigate('/login');
+                localStorage.setItem('userToken', response.data.token);
+                toast.success('Registration successful!');
+                navigate('/');
+            } else {
+                toast.error(response.data.message || 'Registration failed');
             }
         } catch (error) {
-            toast.error(error.response?.data?.message || 'Registration failed');
+            console.error('Registration error:', error);
+            toast.error(error.response?.data?.message || 'Registration failed. Please try again.');
         } finally {
             setLoading(false);
         }

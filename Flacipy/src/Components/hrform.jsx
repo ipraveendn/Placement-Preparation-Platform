@@ -1,78 +1,104 @@
-import * as React from 'react';
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import video from '../assets/video.svg';
-import x from '../assets/x.svg';
-import axios from 'axios'
-import {toast} from 'sonner'
+import React, { useState } from 'react';
+import axios from 'axios';
+import { toast } from 'sonner';
+import classes from './hrform.module.css';
+import { Modal, Backdrop } from '@mui/material';
 
-const classes = {
-  button1: "bg-[#5252dd] rounded-[10px] text-white font-bold text-md flex flex-row items-center justify-center gap-2 p-2 mt-4 hover:bg-[#5252dd]/80 hover:cursor-pointer",
-  img1: "w-[20px] h-[20px] mt-[2px]",
-  name: 'font-bold text-[23px]',
-  x: 'w-[40px] h-[40px] bg-[#5252dd] rounded-full p-[8px] hover:cursor-pointer hover:bg-[#5252dd]/80',
-  topcont: 'flex flex-row justify-between mb-[30px]',
-  modal: 'rounded-[15px]',
-  inside: 'w-full h-[40px] text-[9px] rounded-[7px] border-solid border-[1px] border-zinc-800 text-black text-[16px] px-[15px] mt-[5px] hover:border-[#141414]',
-  inside1: 'w-full border-solid border-[1px] border-zinc-800 text-black h-[40px] hover:border-[#141414] rounded-[7px] mb-[35px]',
-  inside2: 'text-[9px] w-full h-[40px] rounded-[7px] px-[10px]',
-  name1: 'text-[16px] ml-[5px] mb-[3px] font-medium text-black',
-  input: 'mb-[15px]',
-  button2: 'h-[40px] w-full font-medium rounded-[7px] bg-[#5252dd] border-solid border-[1px] border-zinc-900 text-white text-[16px] px-[15px] hover:bg-[#5252dd]/80 hover:border-[#141414] cursor-pointer',
-};
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  p: 3.5,
-};
-
-export default function Hrform() {
-  const [open, setOpen] = React.useState(false);
-  const [position, setPosition] = React.useState('');
-  const [date, setDate] = React.useState('');
-  const [time, setTime] = React.useState('');
-  const [message, setMessage] = React.useState('');
+const HrForm = () => {
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    position: '',
+    date: '',
+    time: '',
+    mode: 'online',
+    platform: '',
+    venue: ''
+  });
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
-      const res = await axios.post('http://localhost:5000/api/interview', {
-        type: "HR",
-        position,
-        date,
-        time,
-        score: "Pending" // Optional placeholder or can remove if not required in schema
+      const token = localStorage.getItem('userToken');
+      console.log('Token from localStorage:', token);
 
-      });
-      toast.success(res.data.message)
-      setPosition('');
-      setDate('');
-      setTime('');
-      handleClose();
+      if (!token) {
+        toast.error('Please login to schedule an interview');
+        return;
+      }
 
+      // Format the date to match backend expectations
+      const formattedDate = new Date(formData.date).toISOString().split('T')[0];
+
+      const requestData = {
+        ...formData,
+        date: formattedDate
+      };
+      console.log('Request data being sent:', requestData);
+
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      };
+      console.log('Request headers:', config.headers);
+
+      const response = await axios.post(
+        'http://localhost:5000/api/interview-request/submit',
+        requestData,
+        config
+      );
+
+      console.log('Response received:', response.data);
+
+      if (response.data.success) {
+        toast.success('Interview scheduled successfully!');
+        setFormData({
+          position: '',
+          date: '',
+          time: '',
+          mode: 'online',
+          platform: '',
+          venue: ''
+        });
+        handleClose();
+      } else {
+        console.log('Error in response:', response.data);
+        toast.error(response.data.message || 'Failed to schedule interview');
+      }
     } catch (error) {
-      toast.error("Failed scheduling interview.")
-      console.error(error);
+      console.error('Error details:', {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status,
+        headers: error.response?.headers
+      });
+      toast.error(error.response?.data?.message || 'Failed to schedule interview');
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div>
       <div onClick={handleOpen} className={classes.button1}>
-      <img src={video} className={classes.img1}/>
-        <span>Schedule HR Interview</span></div>
+        <span>Schedule HR Interview</span>
+      </div>
+
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -86,37 +112,113 @@ export default function Hrform() {
           },
         }}
       >
-        <Fade in={open}>
-          <Box sx={style} className={classes.modal}>
-            <div className={classes.topcont}>
-              <div className={classes.name}>Schedule HR Interview</div><img className={classes.x} src={x} onClick={handleClose} open={open}></img>
+        <div className={classes.modal}>
+          <h2 className={classes.modalTitle}>Schedule HR Interview</h2>
+          <form onSubmit={handleSubmit} className={classes.form}>
+            <div className={classes.formGroup}>
+              <label className={classes.label}>Position:</label>
+              <input
+                type="text"
+                name="position"
+                value={formData.position}
+                onChange={handleChange}
+                className={classes.input}
+                placeholder="Enter the position"
+                required
+              />
             </div>
-            <div>
-              <form onSubmit={handleSubmit}>
-                <label className={classes.name1}>Position:</label><br />
-                <div className={classes.input}>
-                  <input type='text' className={classes.inside} id='input' placeholder='Enter the position' onChange={(e) => setPosition(e.target.value)} required />
-                </div>
-                <label className={classes.name1}>Preferred Date:</label><br />
-                <div className={classes.input}>
-                  <input type='date' className={classes.inside} id='input' onChange={(e) => setDate(e.target.value)} required />
-                </div>
-                <label className={classes.name1}>Preferred Time:</label><br />
-                <div className={classes.inside1}>
-                  <select id='input' onChange={(e) => setTime(e.target.value)} className={classes.inside2} required>
-                    <option value=''>Select a time slot</option>
-                    <option value='10AM - 12PM'>10AM - 12PM</option>
-                    <option value='2PM - 4PM'>2PM - 4PM</option>
-                  </select>
-                </div>
-                <div>
-                  <input type='submit' id='input' placeholder='Confirm booking' className={classes.button2} required />
-                </div>
-              </form>
+
+            <div className={classes.formGroup}>
+              <label className={classes.label}>Date:</label>
+              <input
+                type="date"
+                name="date"
+                value={formData.date}
+                onChange={handleChange}
+                className={classes.input}
+                min={new Date().toISOString().split('T')[0]}
+                required
+              />
             </div>
-          </Box>
-        </Fade>
+
+            <div className={classes.formGroup}>
+              <label className={classes.label}>Time:</label>
+              <input
+                type="time"
+                name="time"
+                value={formData.time}
+                onChange={handleChange}
+                className={classes.input}
+                required
+              />
+            </div>
+
+            <div className={classes.formGroup}>
+              <label className={classes.label}>Interview Mode:</label>
+              <select
+                name="mode"
+                value={formData.mode}
+                onChange={handleChange}
+                className={classes.input}
+                required
+              >
+                <option value="online">Online</option>
+                <option value="offline">Offline</option>
+              </select>
+            </div>
+
+            {formData.mode === 'online' && (
+              <div className={classes.formGroup}>
+                <label className={classes.label}>Platform:</label>
+                <input
+                  type="text"
+                  name="platform"
+                  value={formData.platform}
+                  onChange={handleChange}
+                  className={classes.input}
+                  placeholder="e.g., Google Meet, Zoom"
+                  required
+                />
+              </div>
+            )}
+
+            {formData.mode === 'offline' && (
+              <div className={classes.formGroup}>
+                <label className={classes.label}>Venue:</label>
+                <input
+                  type="text"
+                  name="venue"
+                  value={formData.venue}
+                  onChange={handleChange}
+                  className={classes.input}
+                  placeholder="Enter venue address"
+                  required
+                />
+              </div>
+            )}
+
+            <div className={classes.buttonGroup}>
+              <button
+                type="button"
+                onClick={handleClose}
+                className={`${classes.button} ${classes.cancelButton}`}
+                disabled={loading}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className={`${classes.button} ${classes.submitButton}`}
+                disabled={loading}
+              >
+                {loading ? 'Scheduling...' : 'Schedule Interview'}
+              </button>
+            </div>
+          </form>
+        </div>
       </Modal>
     </div>
   );
-}
+};
+
+export default HrForm;
