@@ -65,9 +65,9 @@ const Mock = () => {
     <div className={classes.container0}>
       <div className={classes.container1}>
         <div>
-          <div className={classes.head1}>Mock Interview</div>
+          <div id='head' className={classes.head1}>Mock Interview</div>
           <div className={classes.intro1}>Practice your interview skills with HR professionals or our AI interviewer</div>
-          <div className={classes.container2}>
+          <div id='head' className={classes.container2}>
             <div className={classes.card1}>
               <div className={classes.imgcont}><img src={people} className={classes.ppl}></img></div>
               <div className={classes.head2}>HR Live Interview</div>
@@ -91,7 +91,7 @@ const Mock = () => {
               <div><Aiform/></div>
             </div>
           </div>
-          <div className={classes.container3}>
+          <div id='table' className={classes.container3}>
             <div className={classes.card2}>
               <div className={classes.head3}>Recent Interviews</div>
               <table className={classes.table}>
