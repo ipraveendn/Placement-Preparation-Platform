@@ -1,4 +1,3 @@
-import React from "react";
 import "./Questions.css";
 import { AiOutlineLike } from "react-icons/ai";
 import { useState, useEffect } from "react";
@@ -38,39 +37,223 @@ const items =[
     level: "hard",
     category: "Apple",
   },
+  {
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "G",
+    level: "hard",
+    category: "Google",
+  },
+  {
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "A",
+    level: "hard",
+    category: "Amazon",
+  },
+  {
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "M",
+    level: "hard",
+    category: "Meta",
+  },{
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "MS",
+    level: "hard",
+    category: "Microsoft",
+  },{
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "AP",
+    level: "hard",
+    category: "Apple",
+  },
+  {
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "G",
+    level: "hard",
+    category: "Google",
+  },
+  {
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "A",
+    level: "hard",
+    category: "Amazon",
+  },
+  {
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "M",
+    level: "hard",
+    category: "Meta",
+  },{
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "MS",
+    level: "hard",
+    category: "Microsoft",
+  },{
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "AP",
+    level: "hard",
+    category: "Apple",
+  },
+  {
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "G",
+    level: "hard",
+    category: "Google",
+  },
+  {
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "A",
+    level: "hard",
+    category: "Amazon",
+  },
+  {
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "M",
+    level: "hard",
+    category: "Meta",
+  },{
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "MS",
+    level: "hard",
+    category: "Microsoft",
+  },{
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "AP",
+    level: "hard",
+    category: "Apple",
+  },
+  {
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "G",
+    level: "hard",
+    category: "Google",
+  },
+  {
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "A",
+    level: "hard",
+    category: "Amazon",
+  },
+  {
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "M",
+    level: "hard",
+    category: "Meta",
+  },{
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "MS",
+    level: "hard",
+    category: "Microsoft",
+  },{
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "AP",
+    level: "hard",
+    category: "Apple",
+  },
+  {
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "G",
+    level: "hard",
+    category: "Google",
+  },
+  {
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "A",
+    level: "hard",
+    category: "Amazon",
+  },
+  {
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "M",
+    level: "hard",
+    category: "Meta",
+  },{
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "MS",
+    level: "hard",
+    category: "Microsoft",
+  },{
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "AP",
+    level: "hard",
+    category: "Apple",
+  },
 ]
 
 const Questions = () => {
 
-  const [search, setSearch] = useState("");
+    const [search, setSearch] = useState("");
     const [selectedFilters, setSelectedFilters] = useState([]);
     const [filteredItems, setFilteredItems] = useState(items);
+    const [showCount, setShowCount] = useState(5);
     let filters = ["Google", "Amazon", "Microsoft", "Meta", "Apple"];
-  
+
     const handleFilterButtonClick = (category) => {
       setSelectedFilters((prevFilters) =>
         prevFilters.includes(category)
           ? prevFilters.filter((filter) => filter !== category)
           : [...prevFilters, category]
       );
+      setShowCount(5);
     };
 
     const handleResetButtonClick = () => {
-    setSelectedFilters([]);
-  };
-    
-      useEffect(() => {
-        if (selectedFilters.length === 0) {
-          setFilteredItems(items);
-        } else {
-          setFilteredItems(
-            items.filter((item) => selectedFilters.includes(item.category))
-          );
-        }
-      }, [selectedFilters]);
+      setSelectedFilters([])
+      setSearch("");
+      setShowCount(5);
+    };
 
-  return (
-    <>
+    const handleLessButtonClick = () => {
+      setShowCount(5);
+    };
+
+    useEffect(() => {
+      let filtered = items;
+
+      if (selectedFilters.length > 0) {
+        filtered = filtered.filter((item) => selectedFilters.includes(item.category));
+      }
+
+      if (search.trim() !== "") {
+        filtered = filtered.filter((item) =>
+          item.category.toLowerCase().includes(search.trim().toLowerCase())
+        );
+      }
+
+      setFilteredItems(filtered);
+      setShowCount(5);
+    }, [selectedFilters, search]);
+
+    const handleShowMore = () => {
+      setShowCount((prev) => prev + 5);
+    };
+
+    return (
+      <>
       <div className="blue-sec">
         <h3>Find Interview Questions</h3>
         <p>
@@ -104,7 +287,7 @@ const Questions = () => {
         <p>Showing the most recently asked questions</p>
       </div>
       <div>
-          {filteredItems.map((item, idx) => (
+          {filteredItems.slice(0, showCount).map((item, idx) => (
           <div className="v-cards" key={idx}>
             <div className="verticle-card">
            <div className="comp-icon">{item.company_icon}</div>
@@ -124,9 +307,23 @@ const Questions = () => {
           </div>
         </div>
         ))}
+        <div className="blue-sec1">
+        <div className="companies">
+        {showCount < filteredItems.length && (
+            <button className="comp-names" onClick={handleShowMore}>
+              Show More
+            </button>
+          )}
+          {showCount > 5 && (
+            <button className="comp-names" onClick={handleLessButtonClick}>
+              Show Less
+            </button>
+        )}
         </div>
-    </>
-  );
+        </div>
+        </div>
+      </>
+    );
 };
 
 export default Questions;
