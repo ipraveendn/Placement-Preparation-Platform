@@ -1,13 +1,74 @@
 import React from "react";
 import "./Questions.css";
 import { AiOutlineLike } from "react-icons/ai";
-import { useState } from "react";
-var company = "Amazon";
-var company_icon = "G";
+import { useState, useEffect } from "react";
 const level = "hard";
 
+const items =[
+  {
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "G",
+    level: "hard",
+    category: "Google",
+  },
+  {
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "A",
+    level: "hard",
+    category: "Amazon",
+  },
+  {
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "M",
+    level: "hard",
+    category: "Meta",
+  },{
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "MS",
+    level: "hard",
+    category: "Microsoft",
+  },{
+    head: "Design a system that handle millions of concurrent users for alive streaming platform.",
+    description: "Senior Software Engineer. Asked on 15 May",
+    company_icon: "AP",
+    level: "hard",
+    category: "Apple",
+  },
+]
+
 const Questions = () => {
+
   const [search, setSearch] = useState("");
+    const [selectedFilters, setSelectedFilters] = useState([]);
+    const [filteredItems, setFilteredItems] = useState(items);
+    let filters = ["Google", "Amazon", "Microsoft", "Meta", "Apple"];
+  
+    const handleFilterButtonClick = (category) => {
+      setSelectedFilters((prevFilters) =>
+        prevFilters.includes(category)
+          ? prevFilters.filter((filter) => filter !== category)
+          : [...prevFilters, category]
+      );
+    };
+
+    const handleResetButtonClick = () => {
+    setSelectedFilters([]);
+  };
+    
+      useEffect(() => {
+        if (selectedFilters.length === 0) {
+          setFilteredItems(items);
+        } else {
+          setFilteredItems(
+            items.filter((item) => selectedFilters.includes(item.category))
+          );
+        }
+      }, [selectedFilters]);
+
   return (
     <>
       <div className="blue-sec">
@@ -30,113 +91,40 @@ const Questions = () => {
           </button>
         </div>
         <div className="companies">
-          <button className="comp-names">Google</button>
-          <button className="comp-names">Amazon</button>
-          <button className="comp-names">Microsoft</button>
-          <button className="comp-names">Meta</button>
-          <button className="comp-names">Apple</button>
+        {filters.map((category, idx) => (
+        <div key={idx}>
+          <button className={`${selectedFilters?.includes(category) ? "active" : "comp-names"}`} onClick={() => handleFilterButtonClick(category)}>{category}</button>
+        </div>
+        ))}
+        <button className="comp-names" onClick={handleResetButtonClick}>Reset</button>
         </div>
       </div>
       <div className="middle-part">
-        <h2>Interview Questions for {company}</h2>
+        <h2>Interview Questions</h2>
         <p>Showing the most recently asked questions</p>
       </div>
-      <div className="v-cards">
-        <div className="verticle-card">
-          <div className="comp-icon">{company_icon}</div>
-          <div>
-            <h2>
-              Design a system that handel millions of concurrent users for a
-              live streaming platform.
+      <div>
+          {filteredItems.map((item, idx) => (
+          <div className="v-cards" key={idx}>
+            <div className="verticle-card">
+           <div className="comp-icon">{item.company_icon}</div>
+            <div>
+              <h2>
+              {item.category}
             </h2>
-            <p>Senior Software Engineer. Asked on 15 May</p>
-            <div className="level"> {level} </div>
+            <h2>
+              {item.head}
+            </h2>
+            <p>{item.description}</p>
+            <div className="level">{item.level}</div>
           </div>
           <div className="card-last">
-            <div className="like-icon">
-              <AiOutlineLike />
-              <div>392</div>
-            </div>
-            <div className="view-details">View details</div>
-            <div className="save-button">Save</div>
+          <div className="view-details">View details</div>
+          </div>
           </div>
         </div>
-        <div className="verticle-card">
-          <div className="comp-icon">{company_icon}</div>
-          <div>
-            <h2>
-              Implement an algorithm to find the shortest path in a graph.
-            </h2>
-            <p>Senior Data Engineer. Asked on 20 May</p>
-            <div className="level"> {level} </div>
-          </div>
-          <div className="card-last">
-            <div className="like-icon">
-              <AiOutlineLike />
-              <div>392</div>
-            </div>
-            <div className="view-details">View details</div>
-            <div className="save-button">Save</div>
-          </div>
+        ))}
         </div>
-        <div className="verticle-card">
-          <div className="comp-icon">{company_icon}</div>
-          <div>
-            <h2>
-              Design a system that handel millions of concurrent users for a
-              live streaming platform.
-            </h2>
-            <p>Senior Software Engineer. Asked on 15 May</p>
-            <div className="level"> {level} </div>
-          </div>
-          <div className="card-last">
-            <div className="like-icon">
-              <AiOutlineLike />
-              <div>392</div>
-            </div>
-            <div className="view-details">View details</div>
-            <div className="save-button">Save</div>
-          </div>
-        </div>
-        <div className="verticle-card">
-          <div className="comp-icon">{company_icon}</div>
-          <div>
-            <h2>
-              Design a system that handel millions of concurrent users for a
-              live streaming platform.
-            </h2>
-            <p>Senior Software Engineer. Asked on 15 May</p>
-            <div className="level"> {level} </div>
-          </div>
-          <div className="card-last">
-            <div className="like-icon">
-              <AiOutlineLike />
-              <div>392</div>
-            </div>
-            <div className="view-details">View details</div>
-            <div className="save-button">Save</div>
-          </div>
-        </div>
-        <div className="verticle-card">
-          <div className="comp-icon">{company_icon}</div>
-          <div>
-            <h2>
-              Design a system that handel millions of concurrent users for a
-              live streaming platform.
-            </h2>
-            <p>Senior Software Engineer. Asked on 15 May</p>
-            <div className="level"> {level} </div>
-          </div>
-          <div className="card-last">
-            <div className="like-icon">
-              <AiOutlineLike />
-              <div>392</div>
-            </div>
-            <div className="view-details">View details</div>
-            <div className="save-button">Save</div>
-          </div>
-        </div>
-      </div>
     </>
   );
 };
