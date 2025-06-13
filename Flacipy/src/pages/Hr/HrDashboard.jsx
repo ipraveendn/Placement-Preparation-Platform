@@ -34,16 +34,13 @@ const HrDashboard = () => {
                 return;
             }
 
-            console.log('Fetching upcoming interviews with token:', token); // Debug log
-
-            const response = await axios.get('http://localhost:5000/api/interview-request/upcoming', {
+            // Fetch from mockinterviews endpoint for HR
+            const response = await axios.get('http://localhost:5000/api/mock-interview/hr-interviews', {
                 headers: { 
                     'Authorization': token.startsWith('Bearer ') ? token : `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 }
             });
-
-            console.log('Upcoming interviews response:', response.data); // Debug log
 
             if (response.data.success) {
                 setInterviews(response.data.data);
@@ -51,11 +48,9 @@ const HrDashboard = () => {
                 setError(response.data.message || 'Failed to fetch upcoming interviews');
             }
         } catch (error) {
-            console.error('Error fetching upcoming interviews:', error); // Debug log
             const errorMessage = error.response?.data?.message || error.message || 'Failed to fetch upcoming interviews';
             setError(errorMessage);
             toast.error(errorMessage);
-            
             if (error.response?.status === 401) {
                 localStorage.removeItem('hrToken');
                 navigate('/hr/login');
@@ -112,10 +107,17 @@ const HrDashboard = () => {
                 return;
             }
 
+            // Convert scores to numbers
+            const numericScores = {
+                technical: Number(scores.technical),
+                communication: Number(scores.communication),
+                problemSolving: Number(scores.problemSolving)
+            };
+
             const response = await axios.post(
                 `http://localhost:5000/api/mock-interview/submit-scores/${selectedInterview._id}`,
                 {
-                    scores,
+                    scores: numericScores,
                     feedback
                 },
                 {
@@ -222,10 +224,10 @@ const HrDashboard = () => {
                 toast.success(response.data.message || 'Request rejected successfully!');
                 // Refresh both lists to ensure UI is up to date
                 try {
-                    await Promise.all([
-                        fetchPendingRequests(),
-                        fetchUpcomingInterviews()
-                    ]);
+                await Promise.all([
+                    fetchPendingRequests(),
+                    fetchUpcomingInterviews()
+                ]);
                     console.log('Lists refreshed successfully after rejection');
                 } catch (refreshError) {
                     console.error('Error refreshing lists after rejection:', refreshError);

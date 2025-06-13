@@ -1,6 +1,7 @@
 import InterviewRequestModel from '../models/interviewRequestModel.js';
 import userModel from '../models/userModel.js';
 import sendEmail from '../utils/sendEmail.js'; // Import the email utility
+import MockInterview from '../models/mockInterview.js';
 
 // Controller to handle a user submitting an interview request
 const submitInterviewRequest = async (req, res) => {
@@ -169,6 +170,21 @@ const acceptInterviewRequest = async (req, res) => {
         request.hrId = hrId;
         await request.save();
 
+        // Create new interview document
+        const newInterview = new MockInterview({
+            userId: request.userId._id,
+            hrId: hrId,
+            position: request.position,
+            date: request.date,
+            time: request.time,
+            mode: request.mode,
+            platform: request.platform,
+            venue: request.venue,
+            status: 'scheduled'
+        });
+
+        await newInterview.save();
+
         // Send acceptance email to user
         try {
             const emailSubject = 'Your Interview Request Has Been Accepted!';
@@ -183,7 +199,10 @@ const acceptInterviewRequest = async (req, res) => {
         res.status(200).json({
             success: true,
             message: "Interview request accepted successfully",
-            data: request
+            data: {
+                request: request,
+                interview: newInterview
+            }
         });
 
     } catch (error) {
@@ -194,44 +213,6 @@ const acceptInterviewRequest = async (req, res) => {
         });
     }
 };
-
-// Controller to handle HR rejecting an interview request
-// const rejectInterviewRequest = async (req, res) => {
-//     try {
-//         const { requestId, reason } = req.body;
-
-//         const request = await InterviewRequestModel.findById(requestId).populate('userId', 'name email'); // Populate user details for email
-
-//         if (!request) {
-//             return res.json({ success: false, message: "Interview request not found." });
-//         }
-
-//         if (request.status !== 'pending') {
-//             return res.json({ success: false, message: "Request is not pending." });
-//         }
-
-//         // Update request status and optionally add a reason
-//         request.status = 'rejected';
-//         request.adminNotes = `Rejected by HR. Reason: ${reason || 'No reason provided.'}`; // Using adminNotes to store rejection reason for now
-//         await request.save();
-
-//         // Email Sending Logic
-//          if (request.userId && request.userId.email) {
-//             const emailSubject = 'Update on Your Interview Request';
-//             const emailText = `Dear ${request.userId.name},\n\nYour interview request for the position of ${request.position} on ${request.date} at ${request.time} has been reviewed and could not be accepted at this time.\n\nReason: ${reason || 'No reason provided.'}\n\nWe encourage you to submit another request if you wish.\n\nBest regards,\nThe Placement Preparation Platform Team`;
-
-//             // Send email
-//             await sendEmail(request.userId.email, emailSubject, emailText);
-//              console.log(`Rejection email sent to ${request.userId.email}`);
-//         }
-
-//         res.json({ success: true, message: "Interview request rejected successfully!" });
-
-//     } catch (error) {
-//         console.error('Error rejecting interview request:', error);
-//         res.json({ success: false, message: "Error rejecting interview request." });
-//     }
-// };
 
 // Controller to handle HR rejecting an interview request
 const rejectInterviewRequest = async (req, res) => {
@@ -357,59 +338,6 @@ const getUpcomingInterviewRequestsForHr = async (req, res) => {
     }
 };
 
-// Controller to handle HR submitting feedback and scores for a completed interview
-const submitInterviewFeedback = async (req, res) => {
-    try {
-        const { requestId, scores, feedback } = req.body;
-        const hrId = req.user.id; // Assuming hrAuth middleware adds user to req
-
-        const request = await InterviewRequestModel.findOne({ _id: requestId, hrId });
-
-        if (!request) {
-            return res.status(404).json({
-                success: false,
-                message: "Interview request not found or not assigned to this HR"
-            });
-        }
-
-        // You might want to add validation for scores here (e.g., 0-100 range)
-
-        request.scores = scores;
-        request.feedback = feedback;
-        request.status = 'completed'; // Mark as completed after feedback
-
-        await request.save();
-
-        // Optional: Send email to user with feedback and scores
-        try {
-            const user = await userModel.findById(request.userId);
-            if (user && user.email) {
-                const emailSubject = 'Feedback for Your Mock Interview';
-                const emailText = `Dear ${user.name},\n\nHere is the feedback for your mock interview for the position of ${request.position}:\n\nTechnical Score: ${scores.technical}\nCommunication Score: ${scores.communication}\nProblem Solving Score: ${scores.problemSolving}\n\nHR Feedback:\n${feedback}\n\nKeep practicing!\n\nBest regards,\nThe Placement Preparation Platform Team`;
-
-                await sendEmail(user.email, emailSubject, emailText);
-                console.log(`Feedback email sent to ${user.email}`);
-            }
-        } catch (emailError) {
-            console.error('Failed to send feedback email:', emailError);
-            // Don't fail the request if email fails
-        }
-
-        res.status(200).json({
-            success: true,
-            message: "Feedback and scores submitted successfully",
-            data: request
-        });
-
-    } catch (error) {
-        console.error('Error submitting interview feedback:', error);
-        res.status(500).json({
-            success: false,
-            message: "Internal server error"
-        });
-    }
-};
-
 // Controller to handle users fetching their completed interviews with scores
 const getUserCompletedInterviews = async (req, res) => {
     try {
@@ -440,6 +368,5 @@ export {
     rejectInterviewRequest,
     getAllInterviewRequests,
     getUpcomingInterviewRequestsForHr,
-    submitInterviewFeedback,
     getUserCompletedInterviews
 }; 

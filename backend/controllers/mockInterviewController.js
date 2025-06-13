@@ -93,6 +93,22 @@ export const submitInterviewScores = async (req, res) => {
 
         await interview.save();
 
+        // Send feedback email to user
+        try {
+            const user = await User.findById(interview.userId);
+            if (user && user.email) {
+                const emailSubject = 'Feedback for Your Mock Interview';
+                const emailText = `Dear ${user.name},\n\nHere is the feedback for your mock interview for the position of ${interview.position}:\n\nTechnical Score: ${scores.technical}\nCommunication Score: ${scores.communication}\nProblem Solving Score: ${scores.problemSolving}\n\nHR Feedback:\n${feedback}\n\nKeep practicing!\n\nBest regards,\nThe Placement Preparation Platform Team`;
+
+                // Use your email utility here (import if needed)
+                const sendEmail = (await import('../utils/sendEmail.js')).default;
+                await sendEmail(user.email, emailSubject, emailText);
+            }
+        } catch (emailError) {
+            console.error('Failed to send feedback email:', emailError);
+            // Don't fail the request if email fails
+        }
+
         res.status(200).json({
             success: true,
             message: 'Scores submitted successfully',
