@@ -4,7 +4,7 @@ import nodemailer from 'nodemailer';
 // Create a new interview entry
 export const createInterview = async (req, res) => {
     try {
-        const { type, position, date, time, interviewType, difficulty, duration } = req.body;
+        const { type, position, date, time, interviewType, difficulty, duration,email} = req.body;
 
         if (!type || !position) {
             return res.status(400).json({ error: 'Type and position are required' });
@@ -33,6 +33,9 @@ export const createInterview = async (req, res) => {
 
         await interview.save();
 
+        // Send email to the user (candidate)
+        const userEmail = req.user?.email || email;
+
         // If HR interview, send email to HR
         if (type === 'HR') {
             const transporter = nodemailer.createTransport({
@@ -45,7 +48,7 @@ export const createInterview = async (req, res) => {
 
             const mailOptions = {
                 from: process.env.EMAIL_USER,
-                to: 'actualhr@email.com', // Replace with HR's email
+                to:userEmail,// Replace with HR's email
                 subject: `New HR Interview Scheduled - ${position}`,
                 text: `A new HR interview has been scheduled:\n\nPosition: ${position}\nDate: ${date}\nTime: ${time}`,
             };

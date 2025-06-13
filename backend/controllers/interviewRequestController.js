@@ -196,40 +196,119 @@ const acceptInterviewRequest = async (req, res) => {
 };
 
 // Controller to handle HR rejecting an interview request
+// const rejectInterviewRequest = async (req, res) => {
+//     try {
+//         const { requestId, reason } = req.body;
+
+//         const request = await InterviewRequestModel.findById(requestId).populate('userId', 'name email'); // Populate user details for email
+
+//         if (!request) {
+//             return res.json({ success: false, message: "Interview request not found." });
+//         }
+
+//         if (request.status !== 'pending') {
+//             return res.json({ success: false, message: "Request is not pending." });
+//         }
+
+//         // Update request status and optionally add a reason
+//         request.status = 'rejected';
+//         request.adminNotes = `Rejected by HR. Reason: ${reason || 'No reason provided.'}`; // Using adminNotes to store rejection reason for now
+//         await request.save();
+
+//         // Email Sending Logic
+//          if (request.userId && request.userId.email) {
+//             const emailSubject = 'Update on Your Interview Request';
+//             const emailText = `Dear ${request.userId.name},\n\nYour interview request for the position of ${request.position} on ${request.date} at ${request.time} has been reviewed and could not be accepted at this time.\n\nReason: ${reason || 'No reason provided.'}\n\nWe encourage you to submit another request if you wish.\n\nBest regards,\nThe Placement Preparation Platform Team`;
+
+//             // Send email
+//             await sendEmail(request.userId.email, emailSubject, emailText);
+//              console.log(`Rejection email sent to ${request.userId.email}`);
+//         }
+
+//         res.json({ success: true, message: "Interview request rejected successfully!" });
+
+//     } catch (error) {
+//         console.error('Error rejecting interview request:', error);
+//         res.json({ success: false, message: "Error rejecting interview request." });
+//     }
+// };
+
+// Controller to handle HR rejecting an interview request
 const rejectInterviewRequest = async (req, res) => {
     try {
+        console.log('Reject request received:', req.body); // Debug log
         const { requestId, reason } = req.body;
+        const hrId = req.user.id; // Get HR ID from auth middleware
+
+        if (!requestId) {
+            console.error('Missing requestId in reject request');
+            return res.status(400).json({
+                success: false,
+                message: "Request ID is required"
+            });
+        }
 
         const request = await InterviewRequestModel.findById(requestId).populate('userId', 'name email'); // Populate user details for email
 
         if (!request) {
-            return res.json({ success: false, message: "Interview request not found." });
+            console.error('Interview request not found:', requestId);
+            return res.status(404).json({
+                success: false,
+                message: "Interview request not found"
+            });
         }
 
         if (request.status !== 'pending') {
-            return res.json({ success: false, message: "Request is not pending." });
+            console.error('Request is not pending:', { requestId, currentStatus: request.status });
+            return res.status(400).json({
+                success: false,
+                message: "Request is not pending"
+            });
         }
 
         // Update request status and optionally add a reason
         request.status = 'rejected';
+        request.hrId = hrId; // Store which HR rejected the request
         request.adminNotes = `Rejected by HR. Reason: ${reason || 'No reason provided.'}`; // Using adminNotes to store rejection reason for now
-        await request.save();
 
-        // Email Sending Logic
-         if (request.userId && request.userId.email) {
-            const emailSubject = 'Update on Your Interview Request';
-            const emailText = `Dear ${request.userId.name},\n\nYour interview request for the position of ${request.position} on ${request.date} at ${request.time} has been reviewed and could not be accepted at this time.\n\nReason: ${reason || 'No reason provided.'}\n\nWe encourage you to submit another request if you wish.\n\nBest regards,\nThe Placement Preparation Platform Team`;
-
-            // Send email
-            await sendEmail(request.userId.email, emailSubject, emailText);
-             console.log(`Rejection email sent to ${request.userId.email}`);
+        try {
+            await request.save();
+            console.log('Request updated successfully:', requestId);
+        } catch (saveError) {
+            console.error('Error saving rejected request:', saveError);
+            return res.status(500).json({
+                success: false,
+                message: "Error updating request status"
+            });
         }
 
-        res.json({ success: true, message: "Interview request rejected successfully!" });
+        // Email Sending Logic
+        if (request.userId && request.userId.email) {
+            try {
+                const emailSubject = 'Update on Your Interview Request';
+                const emailText = `Dear ${request.userId.name},\n\nYour interview request for the position of ${request.position} on ${request.date} at ${request.time} has been reviewed and could not be accepted at this time.\n\nReason: ${reason || 'No reason provided.'}\n\nWe encourage you to submit another request if you wish.\n\nBest regards,\nThe Placement Preparation Platform Team`;
+
+                // Send email
+                await sendEmail(request.userId.email, emailSubject, emailText);
+                console.log(`Rejection email sent to ${request.userId.email}`);
+            } catch (emailError) {
+                console.error('Failed to send rejection email:', emailError);
+                // Don't fail the request if email fails
+            }
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Interview request rejected successfully",
+            data: request // Send back the updated request
+        });
 
     } catch (error) {
-        console.error('Error rejecting interview request:', error);
-        res.json({ success: false, message: "Error rejecting interview request." });
+        console.error('Error in rejectInterviewRequest:', error);
+        res.status(500).json({
+            success: false,
+            message: "Error rejecting interview request"
+        });
     }
 };
 

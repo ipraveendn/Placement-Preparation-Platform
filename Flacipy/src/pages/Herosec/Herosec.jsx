@@ -1,10 +1,16 @@
-import React from "react";
+import React,{useRef} from "react";
 import "./Herosec.css";
 import { FiMessageCircle, FiHelpCircle, FiFileText } from "react-icons/fi";
 import { HiOutlineLightBulb } from "react-icons/hi";
 import { Link } from 'react-router-dom';
 
 const Herosec = () => {
+
+  const featuresRef =useRef(null);
+
+  const scrollToFeatures =()=>{
+    featuresRef.current?.scrollIntoView({behavior:'smooth'});
+  }
   return (
     <div>
     <div className="parent">
@@ -15,13 +21,13 @@ const Herosec = () => {
         questions, skill practice and resume building tools.
       </p>
       <div className="buttons-hero-sec">
-        <Link to='' id="link" className="get-started">Get Started</Link>
-        <Link to='/signup' id="link" className="learn-more">Learn More</Link>
+            <Link to='/questions' id="link" className="get-started">Get Started</Link>
+        <Link onClick={scrollToFeatures} id="link" className="learn-more">Learn More</Link>
       </div>
     </div>
     </div>
       <div className="landing-page">
-        <section className="features-section">
+        <section className="features-section" ref={featuresRef}>
           <h2 className="section-title">Why Choose Us?</h2>
           <div className="features-cards">
             <div className="feature-card">

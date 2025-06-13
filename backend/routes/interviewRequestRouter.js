@@ -1,5 +1,5 @@
 import express from 'express';
-import { submitInterviewRequest, getPendingInterviewRequests, acceptInterviewRequest, getAllInterviewRequests, getUpcomingInterviewRequestsForHr, submitInterviewFeedback, getUserCompletedInterviews } from '../controllers/interviewRequestController.js';
+import { submitInterviewRequest, getPendingInterviewRequests, acceptInterviewRequest, getAllInterviewRequests, getUpcomingInterviewRequestsForHr, submitInterviewFeedback, getUserCompletedInterviews, rejectInterviewRequest } from '../controllers/interviewRequestController.js';
 import authUser from '../middleware/auth.js'; // Assuming you have a user auth middleware
 import { hrAuth } from '../middleware/hrAuth.js'; // Assuming you have an HR auth middleware
 import adminAuth from '../middleware/adminAuth.js'; // Assuming you have an Admin auth middleware
@@ -16,6 +16,9 @@ interviewRequestRouter.get('/pending', hrAuth, getPendingInterviewRequests);
 
 // Route for HR to accept an interview request
 interviewRequestRouter.post('/accept', hrAuth, acceptInterviewRequest);
+
+// Route for HR to reject an interview request
+interviewRequestRouter.post('/reject', hrAuth, rejectInterviewRequest);
 
 // Route for Admin to fetch all interview requests
 interviewRequestRouter.get('/all', adminAuth, getAllInterviewRequests);
