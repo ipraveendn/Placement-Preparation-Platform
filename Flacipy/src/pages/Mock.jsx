@@ -1,34 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import people from '../assets/people.svg'
 import check from '../assets/check.svg'
 import ai from '../assets/monitor.svg'
 import Hrform from '../Components/hrform'
-import Aiform from '../Components/aiform'
-
-const report = [{
-    date: "May 20, 2025",
-    type: "AI",
-    position: "Software Engineer",
-    score: "89%"
-},
-{
-    date: "May 20, 2025",
-    type: "HR",
-    position: "Software Engineer",
-    score: "95%"
-},
-{
-    date: "April 13, 2025",
-    type: "AI",
-    position: "Data Scientist",
-    score: "82%"
-},
-{
-    date: "April 13, 2025",
-    type: "HR",
-    position: "Data Scientist",
-    score: "93%"
-}]
+import AiRoute from '../Components/AiRoute'
+import axios from 'axios'
 
 const classes = {
     container0: "bg-[#F0F3F8] mt-0",
@@ -61,6 +37,34 @@ const classes = {
 }
 
 const Mock = () => {
+  const [interviews, setInterviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchInterviews = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const token = localStorage.getItem('userToken');
+        if (!token) return;
+        const response = await axios.get('http://localhost:5000/api/mock-interview/user-history', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        if (response.data.success) {
+          setInterviews(response.data.data);
+        } else {
+          setError(response.data.message || 'Failed to fetch interviews');
+        }
+      } catch (err) {
+        setError('Failed to fetch interviews');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchInterviews();
+  }, []);
+
   return (
     <div className={classes.container0}>
       <div className={classes.container1}>
@@ -88,32 +92,38 @@ const Mock = () => {
                 <div className={classes.checkcont}><img src={check} className={classes.check}></img><span className={classes.intro3}>Instant feedback</span></div>
                 <div className={classes.checkcont}><img src={check} className={classes.check}></img><span className={classes.intro3}>Multiple interview types</span></div>
               </div>
-              <div><Aiform/></div>
+              <div><AiRoute/></div>
             </div>
           </div>
           <div id='table' className={classes.container3}>
             <div className={classes.card2}>
               <div className={classes.head3}>Recent Interviews</div>
-              <table className={classes.table}>
-                <thead className={classes.thead}>
-                  <tr>
-                    <th className={classes.tbhead}>DATE</th>
-                    <th className={classes.tbhead}>TYPE</th>
-                    <th className={classes.tbhead}>POSITION</th>
-                    <th className={classes.tbhead}>SCORE</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {report.map((item, index) => (
-                  <tr key={index}>
-                    <td className={classes.trow}>{item.date}</td>
-                    <td className={classes.trow}>{item.type}</td>
-                    <td className={classes.trow}>{item.position}</td>
-                    <td className={classes.trow}>{item.score}</td>
-                  </tr>
-                  ))}
-                </tbody>
-              </table>
+              {loading ? (
+                <div>Loading...</div>
+              ) : error ? (
+                <div className="text-red-500">{error}</div>
+              ) : (
+                <table className={classes.table}>
+                  <thead className={classes.thead}>
+                    <tr>
+                      <th className={classes.tbhead}>DATE</th>
+                      <th className={classes.tbhead}>POSITION</th>
+                      <th className={classes.tbhead}>SCORE (Overall)</th>
+                      <th className={classes.tbhead}>FEEDBACK</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {interviews.map((item, index) => (
+                      <tr key={index}>
+                        <td className={classes.trow}>{item.date ? new Date(item.date).toLocaleDateString() : '-'}</td>
+                        <td className={classes.trow}>{item.position}</td>
+                        <td className={classes.trow}>{item.scores && typeof item.scores.overall === 'number' ? item.scores.overall : '-'}</td>
+                        <td className={classes.trow}>{item.feedback || '-'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
             </div>
           </div>
         </div>

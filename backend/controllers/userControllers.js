@@ -23,8 +23,34 @@ const loginUser = async (req, res) => {
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (isMatch) {
+            // Daily streak logic
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // Normalize to start of day
+
+            let dailyStreak = user.info.dailyStreak || 0;
+            let lastLoginDate = user.info.lastLoginDate ? new Date(user.info.lastLoginDate) : null;
+            if (lastLoginDate) {
+                lastLoginDate.setHours(0, 0, 0, 0); // Normalize to start of day
+            }
+            
+            const yesterday = new Date(today);
+            yesterday.setDate(today.getDate() - 1);
+
+            if (lastLoginDate && lastLoginDate.getTime() === yesterday.getTime()) {
+                // Continue streak if logged in yesterday
+                dailyStreak++;
+            } else if (lastLoginDate && lastLoginDate.getTime() === today.getTime()) {
+                // Already logged in today, do nothing to streak
+            } else {
+                // Break streak if not logged in yesterday or today
+                dailyStreak = 1;
+            }
+            user.info.dailyStreak = dailyStreak;
+            user.info.lastLoginDate = today;
+            await user.save(); // Save updated streak and last login date
+
             const token = createToken(user._id);
-            res.json({ success: true, token })
+            res.json({ success: true, token });
         } else {
             res.json({ success: false, message: "Invalid credentials" });
         }
@@ -80,7 +106,11 @@ const registerUser = async (req, res) => {
         const newUser = new userModel({
             name,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            info: { // Initialize info object with default streak and last login date for new users
+                dailyStreak: 0,
+                lastLoginDate: null
+            }
         });
 
         const user = await newUser.save();
@@ -100,6 +130,71 @@ const registerUser = async (req, res) => {
         });
     }
 }
+
+// Get user profile
+const getUserProfile = async (req, res) => {
+    try {
+        const userId = req.user.id; // Assuming authUser middleware adds user to req
+        const user = await userModel.findById(userId).select('-password'); // Exclude password
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        res.json({ success: true, data: user });
+
+    } catch (error) {
+        console.error('Error fetching user profile:', error);
+        res.status(500).json({ success: false, message: "Failed to fetch user profile" });
+    }
+};
+
+// Update user profile
+const updateUserProfile = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const { name, position, college, location, about } = req.body;
+
+        const user = await userModel.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        // Update basic info
+        if (name) user.name = name;
+
+        // Initialize info object if it doesn't exist
+        if (!user.info) {
+            user.info = {};
+        }
+
+        // Update all profile fields
+        if (position !== undefined) user.info.position = position;
+        if (college !== undefined) user.info.college = college;
+        if (location !== undefined) user.info.location = location;
+        if (about !== undefined) user.info.about = about;
+
+        // Save the updated user
+        await user.save();
+
+        // Return the updated user data
+        const updatedUser = await userModel.findById(userId).select('-password');
+        res.json({ 
+            success: true, 
+            message: "Profile updated successfully", 
+            data: updatedUser 
+        });
+
+    } catch (error) {
+        console.error('Error updating user profile:', error);
+        res.status(500).json({ 
+            success: false, 
+            message: "Failed to update user profile",
+            error: error.message 
+        });
+    }
+};
 
 // Admin Login
 const adminLogin = async (req, res) => {
@@ -127,4 +222,4 @@ const adminLogin = async (req, res) => {
 };
 
 
-export { loginUser, registerUser, adminLogin };
+export { loginUser, registerUser, adminLogin, getUserProfile, updateUserProfile };

@@ -1,5 +1,6 @@
 import Interview from '../models/interview.js';
 import nodemailer from 'nodemailer';
+import MockInterview from '../models/mockInterview.js';
 
 // Create a new interview entry
 export const createInterview = async (req, res) => {
@@ -71,7 +72,7 @@ export const createInterview = async (req, res) => {
 // Get all interviews
 export const getAllInterviews = async (req, res) => {
     try {
-        const interviews = await Interview.find().sort({ date: -1 });
+        const interviews = await MockInterview.find().sort({ date: -1 });
         res.status(200).json(interviews);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -82,9 +83,10 @@ export const getAllInterviews = async (req, res) => {
 
 export const getInterviewCount = async (req, res) => {
     try {
-        const count = await Interview.countDocuments();
-        res.status(200).json({ count });
+        const count = await MockInterview.countDocuments();
+        res.status(200).json({ success: true, count });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, message: error.message });
     }
 };
+

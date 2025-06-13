@@ -53,6 +53,7 @@ const AdminDashboard = () => {
                 pendingRequests: allRequests.filter(req => req.status === 'pending').length,
                 completedInterviews: allRequests.filter(req => req.status === 'completed').length
             });
+            console.log(interviewCountRes.data);
 
             if (hrListRes.data.success) setHrList(hrListRes.data.hrs);
             setAllInterviewRequests(allRequests);
