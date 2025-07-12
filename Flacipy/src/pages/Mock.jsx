@@ -49,7 +49,7 @@ const Mock = () => {
         setError(null);
         const token = localStorage.getItem('userToken');
         if (!token) return;
-        const response = await axios.get('${API_BASE_URL}/api/mock-interview/user-history', {
+        const response = await axios.get(`${API_BASE_URL}/api/mock-interview/user-history`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         if (response.data.success) {
