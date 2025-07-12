@@ -20,7 +20,7 @@ export const createHr = async (req, res) => {
 
         // Generate a random temporary password
         const tempPassword = generateRandomPassword();
-
+        console.log(tempPassword);
         // Hash the password before saving
         const hashedPassword = await bcrypt.hash(tempPassword, 12);
 
