@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { toast } from 'sonner';
 import './Profile.css'
+import { API_BASE_URL } from '../../config';
 
 const Profile = () => {
   const [user, setUser] = useState(null);

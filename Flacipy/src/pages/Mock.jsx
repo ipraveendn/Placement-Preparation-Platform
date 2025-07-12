@@ -5,6 +5,7 @@ import ai from '../assets/monitor.svg'
 import Hrform from '../Components/hrform'
 import AiRoute from '../Components/AiRoute'
 import axios from 'axios'
+import API_BASE_URL from '../config/api'
 
 const classes = {
     container0: "bg-[#F0F3F8] mt-0",

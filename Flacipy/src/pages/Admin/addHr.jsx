@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'sonner';
+import { API_BASE_URL } from '../../config';
 
 const AddHRPage = () => {
     const [loading, setLoading] = useState(false);
