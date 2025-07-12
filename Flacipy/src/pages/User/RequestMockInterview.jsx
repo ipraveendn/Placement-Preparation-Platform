@@ -34,7 +34,7 @@ const RequestMockInterview = () => {
             }
 
             const response = await axios.post(
-                'http://localhost:5000/api/mock-interview/request',
+                `${API_BASE_URL}/api/mock-interview/request`,
                 formData,
                 {
                     headers: { Authorization: `Bearer ${token}` }

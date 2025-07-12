@@ -19,7 +19,7 @@ import SignIn from './pages/User/SignIn';
 import SignUp from './pages/User/SignUp';
 import UserProtectedRoute from './Components/UserProtectedRoute';
 import Profile from './pages/Profile/Profile';
-
+import API_BASE_URL from './config/api';
 
 
 const AppContent = () => {

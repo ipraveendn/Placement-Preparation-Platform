@@ -16,7 +16,7 @@ const HrLogin = () => {
         setLoading(true);
 
         try {
-            const { data } = await axios.post('http://localhost:5000/api/hr/login', { email, password });
+            const { data } = await axios.post(`${API_BASE_URL}/api/hr/login`, { email, password });
             localStorage.setItem('hrToken', data.token);
             toast.success("Login successful");
             navigate('/hr/dashboard');

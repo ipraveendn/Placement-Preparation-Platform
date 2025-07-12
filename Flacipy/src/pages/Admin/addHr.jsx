@@ -22,7 +22,7 @@ const AddHRPage = () => {
         setLoading(true);
         try {
             const token = localStorage.getItem('adminToken');
-            await axios.post('http://localhost:5000/api/hr', formData, {
+            await axios.post(`${API_BASE_URL}/api/hr`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }

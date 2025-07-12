@@ -35,7 +35,7 @@ const HrDashboard = () => {
             }
 
             // Fetch from mockinterviews endpoint for HR
-            const response = await axios.get('http://localhost:5000/api/mock-interview/hr-interviews', {
+            const response = await axios.get(`${API_BASE_URL}/api/mock-interview/hr-interviews`, {
                 headers: { 
                     'Authorization': token.startsWith('Bearer ') ? token : `Bearer ${token}`,
                     'Content-Type': 'application/json'
@@ -70,7 +70,7 @@ const HrDashboard = () => {
                 return;
             }
 
-            const response = await axios.get('http://localhost:5000/api/interview-request/pending', {
+            const response = await axios.get(`${API_BASE_URL}/api/interview-request/pending`, {
                 headers: { 
                     'Authorization': token.startsWith('Bearer ') ? token : `Bearer ${token}`,
                     'Content-Type': 'application/json'
@@ -115,7 +115,7 @@ const HrDashboard = () => {
             };
 
             const response = await axios.post(
-                `http://localhost:5000/api/mock-interview/submit-scores/${selectedInterview._id}`,
+                `${API_BASE_URL}/api/mock-interview/submit-scores/${selectedInterview._id}`,
                 {
                     scores: numericScores,
                     feedback
@@ -161,7 +161,7 @@ const HrDashboard = () => {
             }
 
             const response = await axios.post(
-                'http://localhost:5000/api/interview-request/accept',
+                `${API_BASE_URL}/api/interview-request/accept`,
                 { requestId },
                 {
                     headers: { Authorization: `Bearer ${token}` }
@@ -208,7 +208,7 @@ const HrDashboard = () => {
             console.log('Sending reject request with:', { requestId, reason }); // Debug log
 
             const response = await axios.post(
-                'http://localhost:5000/api/interview-request/reject',
+                `${API_BASE_URL}/api/interview-request/reject`,
                 { requestId, reason },
                 {
                     headers: {

@@ -43,7 +43,7 @@ const Profile = () => {
         return;
       }
 
-      const response = await axios.get('http://localhost:5000/api/users/profile', {
+      const response = await axios.get(`${API_BASE_URL}/api/users/profile`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -106,7 +106,7 @@ const Profile = () => {
         const token = localStorage.getItem('userToken');
         if (!token) return;
 
-        const response = await axios.put('http://localhost:5000/api/users/profile', data, {
+        const response = await axios.put(`${API_BASE_URL}/api/users/profile`, data, {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -186,7 +186,7 @@ const Profile = () => {
         return;
       }
 
-      const response = await axios.put('http://localhost:5000/api/users/profile', formData, {
+      const response = await axios.put(`${API_BASE_URL}/api/users/profile`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -219,7 +219,7 @@ const Profile = () => {
         return;
       }
 
-      const response = await axios.get('http://localhost:5000/api/users/profile', {
+      const response = await axios.get(`${API_BASE_URL}/api/users/profile`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

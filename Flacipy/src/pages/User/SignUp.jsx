@@ -32,7 +32,7 @@ const SignUp = () => {
             setLoading(true);
             console.log('Sending registration request with data:', formData);
 
-            const response = await axios.post('http://localhost:5000/api/users/register', formData);
+            const response = await axios.post(`${API_BASE_URL}/api/users/register`, formData);
             console.log('Registration response:', response.data);
 
             if (response.data.success) {

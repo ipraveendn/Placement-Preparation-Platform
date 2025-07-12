@@ -25,7 +25,7 @@ const Navbar = () => {
       try {
         const token = localStorage.getItem('userToken');
         if (token) {
-          const response = await axios.get('http://localhost:5000/api/users/profile', {
+          const response = await axios.get(`${API_BASE_URL}/api/users/profile`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

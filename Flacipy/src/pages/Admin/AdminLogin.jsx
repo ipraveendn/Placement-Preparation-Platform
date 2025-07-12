@@ -16,7 +16,7 @@ const AdminLogin = () => {
         e.preventDefault();
         setIsLoading(true);
         try {
-            const { data } = await axios.post('http://localhost:5000/api/admin/login', form);
+            const { data } = await axios.post(`${API_BASE_URL}/api/admin/login`, form);
 
             if (data.success) {
                 localStorage.setItem('adminToken', data.token);

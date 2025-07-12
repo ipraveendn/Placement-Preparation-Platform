@@ -3,6 +3,7 @@ import axios from 'axios';
 import { toast } from 'sonner';
 import classes from './hrform.module.css';
 import { Modal, Backdrop } from '@mui/material';
+import API_BASE_URL from '../config/api';
 
 const HrForm = () => {
   const [open, setOpen] = useState(false);
@@ -58,7 +59,7 @@ const HrForm = () => {
       console.log('Request headers:', config.headers);
 
       const response = await axios.post(
-        'http://localhost:5000/api/interview-request/submit',
+        `${API_BASE_URL}/api/interview-request/submit`,
         requestData,
         config
       );

@@ -31,16 +31,16 @@ const AdminDashboard = () => {
             }
 
             const [hrCountRes, interviewCountRes, hrListRes, allRequestsRes] = await Promise.all([
-                axios.get('http://localhost:5000/api/admin/hr-count', {
+                axios.get(`${API_BASE_URL}/api/admin/hr-count`, {
                     headers: { Authorization: `Bearer ${token}` }
                 }),
-                axios.get('http://localhost:5000/api/admin/interview-count', {
+                axios.get(`${API_BASE_URL}/api/admin/interview-count`, {
                     headers: { Authorization: `Bearer ${token}` }
                 }),
-                axios.get('http://localhost:5000/api/admin/hrs', {
+                axios.get(`${API_BASE_URL}/api/admin/hrs`, {
                     headers: { Authorization: `Bearer ${token}` }
                 }),
-                axios.get('http://localhost:5000/api/interview-request/all', {
+                axios.get(`${API_BASE_URL}/api/interview-request/all`, {
                     headers: { Authorization: `Bearer ${token}` }
                 })
             ]);
