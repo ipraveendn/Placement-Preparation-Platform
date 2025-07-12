@@ -24,7 +24,7 @@ const Footer = () => {
     <div className={classes.container}>
         <div className={classes.container1}>
        <div className={classes.container4} id='container4'>
-            <div className={classes.logo}>FLACIFY</div>
+            <div className={classes.logo}>FLACIPY</div>
             <div className={classes.link}>Empowering students to launch successful careers through comprehensive placement training and industry connections.</div>
             <div className={classes.link}>© 2025, All rights reserved</div>
        </div>
@@ -41,7 +41,7 @@ const Footer = () => {
             <div className={classes.head}>Contact Us</div>
             <div className={classes.container2}>
                 <div className={classes.container3}><img src={location} className={classes.img}></img>123 Education street, Learning city, 10001.</div>
-                <div className={classes.container3}><img src={mail} className={classes.img1}></img>contact@flacify.com</div>
+                <div className={classes.container3}><img src={mail} className={classes.img1}></img>contact@flacipy.com</div>
                 <div className={classes.container3}><img src={phone} className={classes.img1}></img>+1 (555) 123-4567</div>
             </div>
        </div>
