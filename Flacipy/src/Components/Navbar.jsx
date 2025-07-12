@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 // import {useLocation } from 'react-router-dom';
 import userIcon from '../assets/user-circles-set.png';
-import { API_BASE_URL } from '../config';
+import  API_BASE_URL  from '../config/api';
 
 const classes = {
     container0: "bg-white text-black flex justify-center items-center shadow-xl",

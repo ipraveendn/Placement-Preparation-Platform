@@ -4,7 +4,7 @@ import axios from 'axios';
 import { toast } from 'sonner';
 import { FiUsers, FiCalendar, FiRefreshCw, FiLogOut, FiPlus, FiLoader } from 'react-icons/fi';
 import { BsGraphUp } from 'react-icons/bs';
-import { API_BASE_URL } from '../../config';
+import  API_BASE_URL  from '../../config/api';
 
 const AdminDashboard = () => {
     const navigate = useNavigate();
